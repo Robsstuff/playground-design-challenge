@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diorama Parallax — No Tilt</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: radial-gradient(ellipse at 50% 60%, #1c1c2e 0%, #060606 100%);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* ---- Scene container ---- */
+  .scene {
+    position: relative;
+    width: min(92vw, 960px);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.08),
+      0 50px 120px rgba(0,0,0,0.95),
+      0 20px 40px rgba(0,0,0,0.6);
+    cursor: grab;
+    will-change: transform;
+  }
+  .scene.drag { cursor: grabbing; }
+
+  /* ---- Ken Burns intro zoom (separate wrapper so it doesn't conflict with JS transforms on layers) ---- */
+  #kb {
+    position: absolute;
+    inset: 0;
+    transform-origin: 52% 52%;
+    animation: kbzoom 4.5s cubic-bezier(0.2, 0, 0.35, 1) both;
+  }
+  @keyframes kbzoom {
+    from { transform: scale(1.20); }
+    to   { transform: scale(1.00); }
+  }
+
+  /* ---- Parallax layers ---- */
+  /* Each layer is 160% the container size, centred via negative offsets.
+     At max drag (160px) the foreground (speed 0.95) shifts 152px — well
+     within the 30% (288px) bleed so edges are never revealed. */
+  .lyr {
+    position: absolute;
+    top: -30%;
+    left: -30%;
+    width: 160%;
+    height: 160%;
+    background: url('photo.jpg') center / cover no-repeat;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+  }
+
+  /* Background — full image, moves slowest */
+  #l0 { z-index: 1; }
+
+  /* Sky / clouds — top strip (roughly top 20% of frame) fades out by 38% */
+  #l1 {
+    z-index: 2;
+    -webkit-mask-image: linear-gradient(to bottom,
+      black 0%, black 20%, transparent 38%);
+    mask-image: linear-gradient(to bottom,
+      black 0%, black 20%, transparent 38%);
+  }
+
+  /* Foreground flanks — left ~25% and right ~25% where pipe cleaners & hoops live */
+  #l2 {
+    z-index: 3;
+    -webkit-mask-image: linear-gradient(to right,
+      black 0%,
+      black 23%, transparent 37%,
+      transparent 63%, black 77%,
+      black 100%);
+    mask-image: linear-gradient(to right,
+      black 0%,
+      black 23%, transparent 37%,
+      transparent 63%, black 77%,
+      black 100%);
+  }
+
+  /* ---- Subtle vignette on top of everything ---- */
+  .scene::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 50% 50%,
+      transparent 55%,
+      rgba(0,0,0,0.35) 100%);
+  }
+
+  /* ---- Hint ---- */
+  #hint {
+    position: fixed;
+    bottom: 28px; left: 0; right: 0;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.38);
+    font: 13px / 1 system-ui, -apple-system, sans-serif;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    pointer-events: none;
+    transition: opacity 1s ease;
+  }
+  #hint.gone { opacity: 0; }
+</style>
+</head>
+<body>
+
+<div class="scene" id="scene">
+  <div id="kb">
+    <div class="lyr" id="l0"></div>  <!-- background (pool photo back wall) -->
+    <div class="lyr" id="l1"></div>  <!-- sky / cotton clouds              -->
+    <div class="lyr" id="l2"></div>  <!-- pipe cleaner tree + hula hoops   -->
+  </div>
+</div>
+<p id="hint">Drag to feel the depth</p>
+
+<script>
+  const scene = document.getElementById('scene');
+  const hint  = document.getElementById('hint');
+
+  // Speed multipliers: how much each layer moves relative to total drag.
+  // bg=0.10, sky=0.42, fg=0.95  →  at max drag (160px) the visible
+  // separation between bg and fg is 136px — very dramatic.
+  const layers = [
+    { el: document.getElementById('l0'), spd: 0.10 },  // background: barely moves
+    { el: document.getElementById('l1'), spd: 0.42 },  // sky/clouds:  halfway
+    { el: document.getElementById('l2'), spd: 0.95 },  // foreground:  nearly full drag
+  ];
+
+  const CLAMP = 160;    // max drag offset in px (large = dramatic)
+  const LERP  = 0.10;   // animation smoothing (lower = more lag but silkier)
+
+  let tx = 0, ty = 0;    // current smoothed position
+  let gx = 0, gy = 0;    // drag target position
+  let dragging = false;
+  let ox = 0, oy = 0;    // pointer position at drag start
+  let bx = 0, by = 0;    // layer position at drag start
+
+  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+  // --- Event listeners ---
+  scene.addEventListener('mousedown',  e => begin(e.clientX, e.clientY));
+  scene.addEventListener('touchstart', e => begin(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
+
+  window.addEventListener('mousemove',  e => drag(e.clientX, e.clientY));
+  window.addEventListener('touchmove',  e => { e.preventDefault(); drag(e.touches[0].clientX, e.touches[0].clientY); }, { passive: false });
+
+  window.addEventListener('mouseup',   end);
+  window.addEventListener('touchend',  end);
+
+  function begin(x, y) {
+    dragging = true;
+    ox = x; oy = y;
+    bx = gx; by = gy;
+    scene.classList.add('drag');
+    hint.classList.add('gone');
+  }
+
+  function drag(x, y) {
+    if (!dragging) return;
+    gx = clamp(bx + x - ox, -CLAMP, CLAMP);
+    gy = clamp(by + y - oy, -CLAMP, CLAMP);
+  }
+
+  function end() {
+    dragging = false;
+    scene.classList.remove('drag');
+    gx = 0; gy = 0;   // spring back to centre on release
+  }
+
+  // --- Main render loop ---
+  (function loop() {
+    // Smooth lerp toward target
+    tx += (gx - tx) * LERP;
+    ty += (gy - ty) * LERP;
+
+    // Parallax shift each depth layer independently
+    for (const { el, spd } of layers) {
+      el.style.transform = `translate3d(${tx * spd}px, ${ty * spd}px, 0)`;
+    }
+
+    requestAnimationFrame(loop);
+  })();
+</script>
+</body>
+</html>
+

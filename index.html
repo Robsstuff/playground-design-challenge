@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Playground Design Challenge</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Home-page-specific overrides */
+    body { padding-top: var(--nav-h); }
+
+    .challenge-description {
+      max-width: 720px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--fg-muted);
+    }
+    .challenge-description strong {
+      color: var(--fg);
+      font-weight: 600;
+    }
+
+    /* Glowing number background on section heading */
+    .designs-section-header {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    .designs-section-header .bg-num {
+      position: absolute;
+      right: 0; top: 50%;
+      transform: translateY(-50%);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 6rem;
+      font-weight: 700;
+      color: rgba(0,229,255,0.05);
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -0.05em;
+    }
+  </style>
+</head>
+<body class="page-enter">
+
+  <!-- ── Navigation ─────────────────────────────────────────────────────── -->
+  <nav class="nav">
+    <a class="nav-logo" href="index.html">
+      PLAYGROUND<span>//</span>DESIGN
+    </a>
+    <div class="nav-links">
+      <a class="nav-link active" href="index.html">Home</a>
+      <a class="nav-link" href="leaderboard.html">Leaderboard</a>
+    </div>
+  </nav>
+
+  <!-- ── Hero ───────────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-bg" style="background-image: url('assets/main-page/slide3.jpg');"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Stage 1 Design Challenge &nbsp;///&nbsp; Student Entries</p>
+      <h1 class="hero-title">Playground<br>Design Challenge</h1>
+      <p class="hero-sub">
+        Twenty incredible playground designs created by our students.
+        Explore each one, then vote for the designs you love most.
+      </p>
+      <a class="hero-cta" href="#designs">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        View All Designs
+      </a>
+    </div>
+    <div class="scroll-hint">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      Scroll
+    </div>
+  </section>
+
+  <!-- ── Design Challenge context ──────────────────────────────────────── -->
+  <div class="section" id="challenge">
+    <p class="section-label">The Challenge</p>
+    <h2 class="section-title">What Students Were Asked to Design</h2>
+    <div class="section-rule"></div>
+    <p class="challenge-description reveal">
+      Students were challenged to <strong>design a dream playground</strong> — a space
+      that is safe, inclusive, exciting, and reflects the natural environment around them.
+      Each design presents a unique vision: how children could play, imagine, and connect
+      with their surroundings through thoughtfully crafted outdoor spaces.
+      <br><br>
+      <strong>Your turn to decide.</strong> Browse the twenty designs below,
+      explore each one up close, and use your votes to show which designs excite you most.
+      You can <strong>Like</strong> any design you admire, and <strong>Invest $100</strong>
+      (pretend money!) into any design you would genuinely back to be built.
+    </p>
+
+    <div class="challenge-strip reveal">
+      <div class="challenge-img-card">
+        <img src="assets/main-page/slide6.jpg" alt="Design challenge context">
+        <div class="img-label">The Brief</div>
+      </div>
+      <div class="challenge-img-card">
+        <img src="assets/main-page/slide7.jpg" alt="Design challenge context">
+        <div class="img-label">Design Criteria</div>
+      </div>
+      <div class="challenge-img-card">
+        <img src="assets/main-page/design-process.png" alt="The Design Process">
+        <div class="img-label">The Design Process</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── How Voting Works ──────────────────────────────────────────────── -->
+  <div class="section-sm" style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-1);">
+    <div style="max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem;">
+      <div class="reveal">
+        <div class="section-label" style="color: var(--cyan);">Step 1</div>
+        <div style="font-weight: 600; margin: 0.5rem 0;">Explore Each Design</div>
+        <div style="color: var(--fg-muted); font-size: 0.9rem;">Click any design card to see the full photo, video, and interactive parallax effects.</div>
+      </div>
+      <div class="reveal">
+        <div class="section-label" style="color: var(--lime);">Step 2</div>
+        <div style="font-weight: 600; margin: 0.5rem 0;">Like What Inspires You</div>
+        <div style="color: var(--fg-muted); font-size: 0.9rem;">Hit the Like button for any design you admire. Likes show community appreciation.</div>
+      </div>
+      <div class="reveal">
+        <div class="section-label" style="color: var(--amber);">Step 3</div>
+        <div style="font-weight: 600; margin: 0.5rem 0;">Invest Pretend $100</div>
+        <div style="color: var(--fg-muted); font-size: 0.9rem;">Each "Invest $100" click adds fake money to that design. Where would you put real funding?</div>
+      </div>
+      <div class="reveal">
+        <div class="section-label" style="color: var(--red);">Step 4</div>
+        <div style="font-weight: 600; margin: 0.5rem 0;">Check the Leaderboard</div>
+        <div style="color: var(--fg-muted); font-size: 0.9rem;">See which designs are leading in likes and investment on the live leaderboard.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Design Grid ────────────────────────────────────────────────────── -->
+  <div class="section" id="designs">
+    <div class="designs-section-header">
+      <p class="section-label">The Entries</p>
+      <h2 class="section-title">All 20 Designs</h2>
+      <div class="section-rule"></div>
+      <div class="bg-num">20</div>
+    </div>
+
+    <div class="designs-grid">
+
+      <!-- ── DESIGN 1 — Beach and Sand Grass Gap (active) ── -->
+      <a class="design-card reveal" href="designs/1-beach-sand-grass-gap.html" data-design-id="1">
+        <img class="design-card-thumb" src="assets/design1/photo.jpg" alt="Beach and Sand Grass Gap">
+        <div class="design-card-body">
+          <div class="design-card-num"># 01</div>
+          <div class="design-card-name">Beach and Sand Grass Gap</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span class="val card-likes">0</span> likes
+            </div>
+            <div class="design-card-stat">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              <span class="val card-money">$0</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- ── DESIGNS 2–20 (locked / coming soon) ── -->
+      <!-- Template: each locked card, numbered -->
+      <div class="design-card locked reveal" data-design-id="2">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 02</div>
+          <div class="design-card-name">Playground Design 2</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="3">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 03</div>
+          <div class="design-card-name">Playground Design 3</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="4">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 04</div>
+          <div class="design-card-name">Playground Design 4</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="5">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 05</div>
+          <div class="design-card-name">Playground Design 5</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="6">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 06</div>
+          <div class="design-card-name">Playground Design 6</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="7">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 07</div>
+          <div class="design-card-name">Playground Design 7</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="8">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 08</div>
+          <div class="design-card-name">Playground Design 8</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="9">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 09</div>
+          <div class="design-card-name">Playground Design 9</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="10">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 10</div>
+          <div class="design-card-name">Playground Design 10</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="11">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 11</div>
+          <div class="design-card-name">Playground Design 11</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="12">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 12</div>
+          <div class="design-card-name">Playground Design 12</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="13">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 13</div>
+          <div class="design-card-name">Playground Design 13</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="14">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 14</div>
+          <div class="design-card-name">Playground Design 14</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="15">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 15</div>
+          <div class="design-card-name">Playground Design 15</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="16">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 16</div>
+          <div class="design-card-name">Playground Design 16</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="17">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 17</div>
+          <div class="design-card-name">Playground Design 17</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="18">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 18</div>
+          <div class="design-card-name">Playground Design 18</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="19">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 19</div>
+          <div class="design-card-name">Playground Design 19</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-card locked reveal" data-design-id="20">
+        <div class="design-card-thumb-placeholder">Coming Soon</div>
+        <div class="design-card-body">
+          <div class="design-card-num"># 20</div>
+          <div class="design-card-name">Playground Design 20</div>
+          <div class="design-card-stats">
+            <div class="design-card-stat"><span class="val card-likes">0</span>&nbsp;likes</div>
+            <div class="design-card-stat"><span class="val card-money">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /designs-grid -->
+  </div>
+
+  <!-- ── Footer ─────────────────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    Playground Design Challenge &nbsp;//&nbsp; Stage 1 &nbsp;//&nbsp; All votes saved to Google Sheets
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initHomePage();
+    });
+  </script>
+</body>
+</html>

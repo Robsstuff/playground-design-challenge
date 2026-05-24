@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diorama — Spotlight</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: #000;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .scene {
+    position: relative;
+    width: min(92vw, 960px);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 0 80px rgba(0,0,0,0.9);
+    cursor: none; /* hide default cursor inside scene */
+  }
+
+  #kb {
+    position: absolute;
+    inset: 0;
+    transform-origin: 52% 52%;
+    animation: kbzoom 5s cubic-bezier(0.2, 0, 0.35, 1) both;
+  }
+  @keyframes kbzoom {
+    from { transform: scale(1.25); }
+    to   { transform: scale(1.00); }
+  }
+
+  .lyr {
+    position: absolute;
+    top: -30%; left: -30%;
+    width: 160%; height: 160%;
+    background: url('photo.jpg') center / cover no-repeat;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+  }
+
+  #l0 { z-index: 1; }
+
+  #l1 {
+    z-index: 2;
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 20%, transparent 38%);
+    mask-image: linear-gradient(to bottom, black 0%, black 20%, transparent 38%);
+  }
+
+  #l2 {
+    z-index: 3;
+    -webkit-mask-image: linear-gradient(to right,
+      black 0%, black 23%, transparent 37%,
+      transparent 63%, black 77%, black 100%);
+    mask-image: linear-gradient(to right,
+      black 0%, black 23%, transparent 37%,
+      transparent 63%, black 77%, black 100%);
+  }
+
+  /* Spotlight overlay — radial gradient hole follows mouse via CSS vars */
+  #spot {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+    background: radial-gradient(
+      circle var(--r, 180px) at var(--mx, 50%) var(--my, 50%),
+      transparent 0%,
+      rgba(0,0,0,0.15) 45%,
+      rgba(0,0,0,0.92) 75%,
+      rgba(0,0,0,0.98) 100%
+    );
+    transition: --r 0.3s ease;
+  }
+
+  /* Custom cursor dot inside scene */
+  #cursor {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.7);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 30;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.3);
+  }
+
+  /* Dim state — scene starts in darkness, spotlight appears on first move */
+  #spot.dark {
+    background: rgba(0,0,0,0.97);
+    transition: background 0.8s ease;
+  }
+
+  #hint {
+    position: fixed;
+    bottom: 28px; left: 0; right: 0;
+    text-align: center;
+    color: rgba(255,255,255,0.45);
+    font: 13px/1 system-ui, sans-serif;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    pointer-events: none;
+    transition: opacity 1.5s ease;
+  }
+  #hint.gone { opacity: 0; }
+</style>
+</head>
+<body>
+
+<div class="scene" id="scene">
+  <div id="kb">
+    <div class="lyr" id="l0"></div>
+    <div class="lyr" id="l1"></div>
+    <div class="lyr" id="l2"></div>
+  </div>
+  <div id="spot" class="dark"></div>
+  <div id="cursor" style="display:none"></div>
+</div>
+<p id="hint">Move your mouse to shine the light</p>
+
+<script>
+  const scene  = document.getElementById('scene');
+  const spot   = document.getElementById('spot');
+  const cur    = document.getElementById('cursor');
+  const hint   = document.getElementById('hint');
+
+  const layers = [
+    { el: document.getElementById('l0'), spd: 0.08 },
+    { el: document.getElementById('l1'), spd: 0.35 },
+    { el: document.getElementById('l2'), spd: 0.80 },
+  ];
+
+  const CLAMP = 120;
+  const LERP  = 0.07;
+
+  let tx = 0, ty = 0, gx = 0, gy = 0;
+  let revealed = false;
+
+  function onMove(clientX, clientY) {
+    const rect = scene.getBoundingClientRect();
+
+    // Spotlight position as % of scene
+    const px = ((clientX - rect.left) / rect.width)  * 100;
+    const py = ((clientY - rect.top)  / rect.height) * 100;
+    spot.style.setProperty('--mx', px + '%');
+    spot.style.setProperty('--my', py + '%');
+
+    // Custom cursor
+    cur.style.left = (clientX - rect.left) + 'px';
+    cur.style.top  = (clientY - rect.top)  + 'px';
+
+    // Parallax target: offset from centre
+    const cx = rect.left + rect.width  / 2;
+    const cy = rect.top  + rect.height / 2;
+    gx = Math.max(-CLAMP, Math.min(CLAMP, ((clientX - cx) / (rect.width  / 2)) * CLAMP));
+    gy = Math.max(-CLAMP, Math.min(CLAMP, ((clientY - cy) / (rect.height / 2)) * CLAMP));
+
+    if (!revealed) {
+      revealed = true;
+      spot.classList.remove('dark');
+      cur.style.display = 'block';
+      hint.classList.add('gone');
+    }
+  }
+
+  scene.addEventListener('mouseenter', () => { cur.style.display = 'block'; });
+  scene.addEventListener('mouseleave', () => {
+    cur.style.display = 'none';
+    // Fade back to dark when mouse leaves
+    spot.classList.add('dark');
+    revealed = false;
+    gx = 0; gy = 0;
+  });
+
+  window.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
+  window.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    onMove(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: false });
+
+  (function loop() {
+    tx += (gx - tx) * LERP;
+    ty += (gy - ty) * LERP;
+    for (const { el, spd } of layers) {
+      el.style.transform = `translate3d(${tx * spd}px, ${ty * spd}px, 0)`;
+    }
+    requestAnimationFrame(loop);
+  })();
+</script>
+</body>
+</html>
+

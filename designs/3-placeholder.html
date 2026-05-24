@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design #03 — Playground Design 3</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    body { padding-top: var(--nav-h); }
+  </style>
+</head>
+<body class="page-enter">
+
+  <nav class="nav">
+    <a class="nav-logo" href="../index.html">PLAYGROUND<span>//</span>DESIGN</a>
+    <div class="nav-links">
+      <a class="nav-link" href="../index.html">Home</a>
+      <a class="nav-link" href="../leaderboard.html">Leaderboard</a>
+    </div>
+  </nav>
+
+  <!-- Vote bar (votes still work on placeholder pages) -->
+  <div class="vote-bar">
+    <a class="vote-bar-back" href="../index.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      All Designs
+    </a>
+    <div class="vote-bar-title">
+      <span># 03</span>Playground Design 3
+    </div>
+    <div class="vote-bar-actions">
+      <button class="btn-like" onclick="handleLike(3)" title="Like this design">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        Like
+        <span class="counter-badge" id="like-count">0</span>
+      </button>
+      <button class="btn-invest" onclick="handleInvest(3)" title="Invest $100 (pretend)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Invest $100
+        <span class="counter-badge" id="money-count">$0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Coming soon hero -->
+  <div class="coming-soon-hero">
+    <div class="coming-soon-num">03</div>
+    <div class="coming-soon-label">Design Entry # 03</div>
+    <h1 class="coming-soon-title">Playground Design 3</h1>
+    <p class="coming-soon-sub">Content coming soon — check back later.</p>
+  </div>
+
+  <!-- Description placeholder -->
+  <div class="terminal-card" style="margin-bottom:2rem;">
+    <div class="terminal-prompt">Description</div>
+    <p class="description-text description-placeholder">
+      Description coming soon — the designer's explanation of this playground concept will appear here.
+    </p>
+  </div>
+
+  <!-- Media placeholders -->
+  <div class="placeholder-slots">
+    <div class="placeholder-slot">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      Photo Coming Soon
+    </div>
+    <div class="placeholder-slot">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+      Video Coming Soon
+    </div>
+    <div class="placeholder-slot">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      Interactive Effects Coming Soon
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    Playground Design Challenge &nbsp;//&nbsp; Design #03 &nbsp;//&nbsp;
+    <a href="../leaderboard.html" style="color:var(--cyan);text-decoration:none;">View Leaderboard</a>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => { initDesignPage(3); });
+  </script>
+</body>
+</html>
