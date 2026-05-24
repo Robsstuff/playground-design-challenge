@@ -71,6 +71,7 @@
     <a class="nav-logo" href="index.html">PLAYGROUND<span>//</span>DESIGN</a>
     <div class="nav-links">
       <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="designs.html">All Designs</a>
       <a class="nav-link active" href="leaderboard.html">Leaderboard</a>
     </div>
   </nav>
@@ -158,7 +159,7 @@
     function renderLbPanel(id, sorted, maxVal, field, fmt, barColor) {
       const el = document.getElementById(id);
       if (!el) return;
-      el.innerHTML = sorted.map((d, i) => {
+      el.innerHTML = sorted.slice(0, 15).map((d, i) => {
         const rank = i + 1;
         const val  = d[field] || 0;
         const pct  = maxVal > 0 ? Math.max(2, Math.round((val / maxVal) * 100)) : 2;

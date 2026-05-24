@@ -25,6 +25,20 @@ const DESIGNS = [
   { id: 20, name: 'Playground Design 20',       slug: '20-placeholder',          active: false },
 ];
 
+// ── Rate-limiting constants ───────────────────────────────────────────────────
+const LIKE_COOLDOWN_MS = 15000;          // 15 seconds between likes
+const lsLikeKey  = id => `pg_like_t_${id}`;   // localStorage key: last like time
+const lsInvKey   = id => `pg_inv_${id}`;       // localStorage key: has invested
+
+function getLikeCooldownMs(id) {
+  const last = parseInt(localStorage.getItem(lsLikeKey(id)) || '0');
+  return Math.max(0, LIKE_COOLDOWN_MS - (Date.now() - last));
+}
+
+function hasInvested(id) {
+  return localStorage.getItem(lsInvKey(id)) === '1';
+}
+
 // ── Config check ─────────────────────────────────────────────────────────────
 function isConfigured() {
   return typeof APPS_SCRIPT_URL !== 'undefined'
@@ -51,7 +65,7 @@ function jsonpFetch(url) {
 
     const sep = url.includes('?') ? '&' : '?';
     const script = document.createElement('script');
-    script.onerror = (e) => {
+    script.onerror = () => {
       clearTimeout(timeout);
       delete window[cbName];
       if (script.parentNode) script.parentNode.removeChild(script);
@@ -66,9 +80,8 @@ function jsonpFetch(url) {
 const LS_KEY = 'playground_votes';
 
 function loadLocalAll() {
-  try {
-    return JSON.parse(localStorage.getItem(LS_KEY)) || {};
-  } catch { return {}; }
+  try { return JSON.parse(localStorage.getItem(LS_KEY)) || {}; }
+  catch { return {}; }
 }
 
 function getLocalVotes(id) {
@@ -90,17 +103,14 @@ function rollNumber(el, to) {
   const step  = to > from ? 1 : -1;
   const steps = Math.min(Math.abs(to - from), 20);
   const inc   = Math.ceil(Math.abs(to - from) / steps);
-  let   cur   = from;
-  let   count = 0;
+  let   cur   = from, count = 0;
   const iv = setInterval(() => {
     cur += step * inc;
     if ((step > 0 && cur >= to) || (step < 0 && cur <= to)) {
-      cur = to;
-      clearInterval(iv);
+      cur = to; clearInterval(iv);
     }
     el.textContent = cur.toLocaleString();
-    count++;
-    if (count > 30) { clearInterval(iv); el.textContent = to.toLocaleString(); }
+    if (++count > 30) { clearInterval(iv); el.textContent = to.toLocaleString(); }
   }, 30);
 }
 
@@ -120,26 +130,60 @@ function pulseBtn(btn) {
   setTimeout(() => btn.classList.remove('btn-pulse'), 500);
 }
 
+// ── Rate-limit UI: Like button countdown overlay ──────────────────────────────
+function startCooldownTimer(designId) {
+  const btn = document.querySelector('.btn-like');
+  if (!btn) return;
+  btn.disabled = true;
+  btn.classList.add('cooling');
+
+  function tick() {
+    const ms = getLikeCooldownMs(designId);
+    if (ms <= 0) {
+      btn.disabled = false;
+      btn.classList.remove('cooling');
+      btn.removeAttribute('data-countdown');
+      return;
+    }
+    btn.dataset.countdown = Math.ceil(ms / 1000) + 's';
+    setTimeout(tick, 250);
+  }
+  tick();
+}
+
+// ── Rate-limit UI: Invest button lock ────────────────────────────────────────
+function lockInvestButton() {
+  const btn = document.querySelector('.btn-invest');
+  if (!btn) return;
+  btn.disabled = true;
+  btn.classList.add('invested');
+}
+
 // ── Design page initialisation ────────────────────────────────────────────────
 function initDesignPage(designId) {
-  // Restore from localStorage first (instant)
-  const local = getLocalVotes(designId);
   const likeEl  = document.getElementById('like-count');
   const moneyEl = document.getElementById('money-count');
+
+  // Restore from localStorage (instant)
+  const local = getLocalVotes(designId);
   if (likeEl)  likeEl.textContent  = local.likes.toLocaleString();
   if (moneyEl) moneyEl.textContent = '$' + local.money.toLocaleString();
 
-  // Then fetch live from Sheets if configured
+  // Restore button states
+  if (getLikeCooldownMs(designId) > 0) startCooldownTimer(designId);
+  if (hasInvested(designId))           lockInvestButton();
+
+  // Fetch live from Sheets if configured
   if (isConfigured()) {
     jsonpFetch(APPS_SCRIPT_URL + '?action=get&id=' + designId)
       .then(data => {
         if (data && !data.error) {
           setLocalVotes(designId, data.likes, data.money);
           if (likeEl)  rollNumber(likeEl, data.likes);
-          if (moneyEl) { moneyEl.textContent = '$' + data.money.toLocaleString(); }
+          if (moneyEl) moneyEl.textContent = '$' + data.money.toLocaleString();
         }
       })
-      .catch(() => {});  // silent fail — local data shown
+      .catch(() => {});
   } else {
     showSetupBanner();
   }
@@ -147,15 +191,21 @@ function initDesignPage(designId) {
 
 // ── Vote handlers ─────────────────────────────────────────────────────────────
 async function handleLike(designId) {
+  // Enforce 15-second cooldown
+  if (getLikeCooldownMs(designId) > 0) return;
+
   const btn     = document.querySelector('.btn-like');
   const likeEl  = document.getElementById('like-count');
   const moneyEl = document.getElementById('money-count');
 
-  // Optimistic update
-  const local   = getLocalVotes(designId);
+  // Record click time & start cooldown UI immediately
+  localStorage.setItem(lsLikeKey(designId), Date.now().toString());
+  startCooldownTimer(designId);
+
+  // Optimistic counter update
+  const local    = getLocalVotes(designId);
   const newLikes = local.likes + 1;
   setLocalVotes(designId, newLikes, local.money);
-
   rollNumber(likeEl, newLikes);
   bumpBadge(likeEl);
   pulseBtn(btn);
@@ -173,15 +223,21 @@ async function handleLike(designId) {
 }
 
 async function handleInvest(designId) {
+  // Enforce once-only investment
+  if (hasInvested(designId)) return;
+
   const btn     = document.querySelector('.btn-invest');
   const likeEl  = document.getElementById('like-count');
   const moneyEl = document.getElementById('money-count');
 
-  // Optimistic update
+  // Record investment & lock button immediately
+  localStorage.setItem(lsInvKey(designId), '1');
+  lockInvestButton();
+
+  // Optimistic counter update
   const local    = getLocalVotes(designId);
   const newMoney = local.money + 100;
   setLocalVotes(designId, local.likes, newMoney);
-
   if (moneyEl) {
     moneyEl.textContent = '$' + newMoney.toLocaleString();
     bumpBadge(moneyEl);
@@ -202,6 +258,7 @@ async function handleInvest(designId) {
 
 // ── Setup banner ──────────────────────────────────────────────────────────────
 function showSetupBanner() {
+  if (document.querySelector('.setup-banner')) return;
   const banner = document.createElement('div');
   banner.className = 'setup-banner';
   banner.textContent = 'Votes not saving yet — see SETUP.md to connect Google Sheets';
@@ -210,9 +267,8 @@ function showSetupBanner() {
   setTimeout(() => banner.remove(), 7200);
 }
 
-// ── Home page: load card counts ───────────────────────────────────────────────
+// ── Home / designs nav page: load card counts ─────────────────────────────────
 async function initHomePage() {
-  // Restore local immediately
   const localAll = loadLocalAll();
   updateHomeCards(localAll);
 
@@ -224,7 +280,6 @@ async function initHomePage() {
       const byId = {};
       data.forEach(d => { byId[d.id] = d; });
       updateHomeCards(byId);
-      // Also persist to local
       data.forEach(d => setLocalVotes(d.id, d.likes, d.money));
     }
   } catch {}
@@ -235,20 +290,15 @@ function updateHomeCards(dataByIdOrLocal) {
     const id   = parseInt(card.dataset.designId);
     const d    = dataByIdOrLocal[id];
     if (!d) return;
-    const likes = d.likes  !== undefined ? d.likes  : 0;
-    const money = d.money  !== undefined ? d.money  : 0;
     const likeEl  = card.querySelector('.card-likes');
     const moneyEl = card.querySelector('.card-money');
-    if (likeEl)  likeEl.textContent  = likes.toLocaleString();
-    if (moneyEl) moneyEl.textContent = '$' + money.toLocaleString();
+    if (likeEl)  likeEl.textContent  = (d.likes  !== undefined ? d.likes  : 0).toLocaleString();
+    if (moneyEl) moneyEl.textContent = '$' + (d.money !== undefined ? d.money : 0).toLocaleString();
   });
 }
 
 // ── Leaderboard ───────────────────────────────────────────────────────────────
 async function initLeaderboard() {
-  const likesPanel = document.getElementById('lb-likes');
-  const moneyPanel = document.getElementById('lb-money');
-
   if (!isConfigured()) {
     renderLeaderboard(DESIGNS.map(d => {
       const local = getLocalVotes(d.id);
@@ -261,10 +311,10 @@ async function initLeaderboard() {
     const data = await jsonpFetch(APPS_SCRIPT_URL + '?action=all');
     if (Array.isArray(data)) renderLeaderboard(data);
   } catch (e) {
-    if (likesPanel) likesPanel.innerHTML = '<div class="lb-loading">Could not load data. Check your connection and try again.</div>';
+    const el = document.getElementById('lb-likes');
+    if (el) el.innerHTML = '<div class="lb-loading">Could not load data — check your connection.</div>';
   }
 
-  // Auto-refresh every 60 s
   setInterval(async () => {
     try {
       const data = await jsonpFetch(APPS_SCRIPT_URL + '?action=all');
@@ -274,27 +324,27 @@ async function initLeaderboard() {
 }
 
 function renderLeaderboard(data) {
-  const byLikes = [...data].sort((a, b) => b.likes  - a.likes);
-  const byMoney = [...data].sort((a, b) => b.money  - a.money);
-
-  const maxLikes = Math.max(1, byLikes[0]?.likes  || 1);
-  const maxMoney = Math.max(1, byMoney[0]?.money  || 1);
-
-  renderPanel('lb-likes', byLikes,  maxLikes,  'likes',  v => v.toLocaleString() + ' like' + (v !== 1 ? 's' : ''));
-  renderPanel('lb-money', byMoney,  maxMoney,  'money',  v => '$' + v.toLocaleString());
+  const byLikes = [...data].sort((a, b) => b.likes - a.likes);
+  const byMoney = [...data].sort((a, b) => b.money - a.money);
+  const maxLikes = Math.max(1, byLikes[0]?.likes || 1);
+  const maxMoney = Math.max(1, byMoney[0]?.money || 1);
+  renderPanel('lb-likes', byLikes, maxLikes, 'likes', v => v.toLocaleString() + ' like' + (v !== 1 ? 's' : ''));
+  renderPanel('lb-money', byMoney, maxMoney, 'money', v => '$' + v.toLocaleString());
 }
 
 function renderPanel(id, sorted, maxVal, field, fmt) {
   const el = document.getElementById(id);
   if (!el) return;
-  el.innerHTML = sorted.map((d, i) => {
+  // Only show top 15 — no need to embarrass those in last place
+  el.innerHTML = sorted.slice(0, 15).map((d, i) => {
     const rank  = i + 1;
     const val   = d[field] || 0;
     const pct   = maxVal > 0 ? Math.max(2, Math.round((val / maxVal) * 100)) : 2;
     const rCls  = rank === 1 ? 'r1' : rank === 2 ? 'r2' : rank === 3 ? 'r3' : 'rn';
+    const icon  = rank === 1 ? '&#9733;' : rank === 2 ? '2' : rank === 3 ? '3' : rank;
     return `<div class="lb-entry">
-      <div class="lb-rank ${rCls}">${rank <= 3 ? ['&#9733;','2','3'][rank-1] : rank}</div>
-      <div>
+      <div class="lb-rank ${rCls}">${icon}</div>
+      <div style="min-width:0;flex:1;">
         <div class="lb-name">${escHtml(d.name)}</div>
         <div class="lb-bar-wrap"><div class="lb-bar" style="width:${pct}%"></div></div>
       </div>
@@ -305,10 +355,8 @@ function renderPanel(id, sorted, maxVal, field, fmt) {
 
 function escHtml(str) {
   return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 // ── Scroll reveal ─────────────────────────────────────────────────────────────
@@ -317,7 +365,7 @@ function initReveal() {
   if (!els.length) return;
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.10 });
   els.forEach(el => obs.observe(el));
 }
 
