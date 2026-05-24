@@ -1032,25 +1032,25 @@ body::before {
   pointer-events: none;
 }
 
-/* Invest button — locked after single use */
-.btn-invest.invested {
-  opacity: 0.5;
+/* Invest button — cooling down: dark overlay shows countdown */
+.btn-invest.cooling {
+  opacity: 0.7;
   cursor: not-allowed;
 }
-.btn-invest.invested::after {
-  content: 'INVESTED ✓';
+.btn-invest.cooling::after {
+  content: attr(data-countdown);
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.68);
   border-radius: inherit;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: var(--lime);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   pointer-events: none;
 }
 

@@ -25,18 +25,19 @@ const DESIGNS = [
   { id: 20, name: 'Playground Design 20',       slug: '20-placeholder',          active: false },
 ];
 
-// ── Rate-limiting constants ───────────────────────────────────────────────────
-const LIKE_COOLDOWN_MS = 15000;          // 15 seconds between likes
-const lsLikeKey  = id => `pg_like_t_${id}`;   // localStorage key: last like time
-const lsInvKey   = id => `pg_inv_${id}`;       // localStorage key: has invested
+// ── Rate-limiting — both buttons share a 15-second cooldown ──────────────────
+const COOLDOWN_MS     = 15000;
+const lsLikeKey      = id => `pg_like_t_${id}`;   // timestamp of last like
+const lsInvTimeKey   = id => `pg_inv_t_${id}`;    // timestamp of last invest
 
 function getLikeCooldownMs(id) {
   const last = parseInt(localStorage.getItem(lsLikeKey(id)) || '0');
-  return Math.max(0, LIKE_COOLDOWN_MS - (Date.now() - last));
+  return Math.max(0, COOLDOWN_MS - (Date.now() - last));
 }
 
-function hasInvested(id) {
-  return localStorage.getItem(lsInvKey(id)) === '1';
+function getInvestCooldownMs(id) {
+  const last = parseInt(localStorage.getItem(lsInvTimeKey(id)) || '0');
+  return Math.max(0, COOLDOWN_MS - (Date.now() - last));
 }
 
 // ── Config check ─────────────────────────────────────────────────────────────
@@ -130,15 +131,14 @@ function pulseBtn(btn) {
   setTimeout(() => btn.classList.remove('btn-pulse'), 500);
 }
 
-// ── Rate-limit UI: Like button countdown overlay ──────────────────────────────
-function startCooldownTimer(designId) {
-  const btn = document.querySelector('.btn-like');
+// ── Cooldown timer UI — shared logic for both buttons ────────────────────────
+function startCooldownTimer(btn, getCooldownFn) {
   if (!btn) return;
   btn.disabled = true;
   btn.classList.add('cooling');
 
   function tick() {
-    const ms = getLikeCooldownMs(designId);
+    const ms = getCooldownFn();
     if (ms <= 0) {
       btn.disabled = false;
       btn.classList.remove('cooling');
@@ -151,14 +151,6 @@ function startCooldownTimer(designId) {
   tick();
 }
 
-// ── Rate-limit UI: Invest button lock ────────────────────────────────────────
-function lockInvestButton() {
-  const btn = document.querySelector('.btn-invest');
-  if (!btn) return;
-  btn.disabled = true;
-  btn.classList.add('invested');
-}
-
 // ── Design page initialisation ────────────────────────────────────────────────
 function initDesignPage(designId) {
   const likeEl  = document.getElementById('like-count');
@@ -169,9 +161,11 @@ function initDesignPage(designId) {
   if (likeEl)  likeEl.textContent  = local.likes.toLocaleString();
   if (moneyEl) moneyEl.textContent = '$' + local.money.toLocaleString();
 
-  // Restore button states
-  if (getLikeCooldownMs(designId) > 0) startCooldownTimer(designId);
-  if (hasInvested(designId))           lockInvestButton();
+  // Restore button cooldown states
+  const likeBtn   = document.querySelector('.btn-like');
+  const investBtn = document.querySelector('.btn-invest');
+  if (getLikeCooldownMs(designId)   > 0) startCooldownTimer(likeBtn,   () => getLikeCooldownMs(designId));
+  if (getInvestCooldownMs(designId) > 0) startCooldownTimer(investBtn, () => getInvestCooldownMs(designId));
 
   // Fetch live from Sheets if configured
   if (isConfigured()) {
@@ -191,16 +185,15 @@ function initDesignPage(designId) {
 
 // ── Vote handlers ─────────────────────────────────────────────────────────────
 async function handleLike(designId) {
-  // Enforce 15-second cooldown
   if (getLikeCooldownMs(designId) > 0) return;
 
-  const btn     = document.querySelector('.btn-like');
+  const likeBtn = document.querySelector('.btn-like');
   const likeEl  = document.getElementById('like-count');
   const moneyEl = document.getElementById('money-count');
 
-  // Record click time & start cooldown UI immediately
+  // Record time & start cooldown immediately
   localStorage.setItem(lsLikeKey(designId), Date.now().toString());
-  startCooldownTimer(designId);
+  startCooldownTimer(likeBtn, () => getLikeCooldownMs(designId));
 
   // Optimistic counter update
   const local    = getLocalVotes(designId);
@@ -208,31 +201,29 @@ async function handleLike(designId) {
   setLocalVotes(designId, newLikes, local.money);
   rollNumber(likeEl, newLikes);
   bumpBadge(likeEl);
-  pulseBtn(btn);
+  pulseBtn(likeBtn);
 
   if (!isConfigured()) return;
-
   try {
     const data = await jsonpFetch(APPS_SCRIPT_URL + '?action=like&id=' + designId);
     if (data && !data.error) {
       setLocalVotes(designId, data.likes, data.money);
-      rollNumber(likeEl,  data.likes);
+      rollNumber(likeEl, data.likes);
       if (moneyEl) moneyEl.textContent = '$' + data.money.toLocaleString();
     }
   } catch {}
 }
 
 async function handleInvest(designId) {
-  // Enforce once-only investment
-  if (hasInvested(designId)) return;
+  if (getInvestCooldownMs(designId) > 0) return;
 
-  const btn     = document.querySelector('.btn-invest');
-  const likeEl  = document.getElementById('like-count');
-  const moneyEl = document.getElementById('money-count');
+  const investBtn = document.querySelector('.btn-invest');
+  const likeEl    = document.getElementById('like-count');
+  const moneyEl   = document.getElementById('money-count');
 
-  // Record investment & lock button immediately
-  localStorage.setItem(lsInvKey(designId), '1');
-  lockInvestButton();
+  // Record time & start cooldown immediately
+  localStorage.setItem(lsInvTimeKey(designId), Date.now().toString());
+  startCooldownTimer(investBtn, () => getInvestCooldownMs(designId));
 
   // Optimistic counter update
   const local    = getLocalVotes(designId);
@@ -242,10 +233,9 @@ async function handleInvest(designId) {
     moneyEl.textContent = '$' + newMoney.toLocaleString();
     bumpBadge(moneyEl);
   }
-  pulseBtn(btn);
+  pulseBtn(investBtn);
 
   if (!isConfigured()) return;
-
   try {
     const data = await jsonpFetch(APPS_SCRIPT_URL + '?action=invest&id=' + designId);
     if (data && !data.error) {
@@ -271,9 +261,7 @@ function showSetupBanner() {
 async function initHomePage() {
   const localAll = loadLocalAll();
   updateHomeCards(localAll);
-
   if (!isConfigured()) return;
-
   try {
     const data = await jsonpFetch(APPS_SCRIPT_URL + '?action=all');
     if (Array.isArray(data)) {
@@ -306,15 +294,13 @@ async function initLeaderboard() {
     }));
     return;
   }
-
   try {
     const data = await jsonpFetch(APPS_SCRIPT_URL + '?action=all');
     if (Array.isArray(data)) renderLeaderboard(data);
-  } catch (e) {
+  } catch {
     const el = document.getElementById('lb-likes');
     if (el) el.innerHTML = '<div class="lb-loading">Could not load data — check your connection.</div>';
   }
-
   setInterval(async () => {
     try {
       const data = await jsonpFetch(APPS_SCRIPT_URL + '?action=all');
@@ -335,7 +321,6 @@ function renderLeaderboard(data) {
 function renderPanel(id, sorted, maxVal, field, fmt) {
   const el = document.getElementById(id);
   if (!el) return;
-  // Only show top 15 — no need to embarrass those in last place
   el.innerHTML = sorted.slice(0, 15).map((d, i) => {
     const rank  = i + 1;
     const val   = d[field] || 0;
