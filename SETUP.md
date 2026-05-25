@@ -9,7 +9,7 @@ Follow these steps once to connect the voting website to Google Sheets.
 1. Go to [sheets.google.com](https://sheets.google.com) and create a new spreadsheet.
 2. Name it **Playground Votes**.
 3. Rename the first sheet tab to **Votes** (right-click the tab → Rename).
-4. Add these headers and data in row 1 and rows 2–21:
+4. Add these headers and data in row 1 and rows 2–36:
 
 ```
 A          B                           C      D
@@ -34,6 +34,21 @@ ID         Name                        Likes  Money
 18         Playground Design 18        0      0
 19         Playground Design 19        0      0
 20         Playground Design 20        0      0
+21         Playground Design 21        0      0
+22         Playground Design 22        0      0
+23         Playground Design 23        0      0
+24         Playground Design 24        0      0
+25         Playground Design 25        0      0
+26         Playground Design 26        0      0
+27         Playground Design 27        0      0
+28         Playground Design 28        0      0
+29         Playground Design 29        0      0
+30         Playground Design 30        0      0
+31         Playground Design 31        0      0
+32         Playground Design 32        0      0
+33         Playground Design 33        0      0
+34         Playground Design 34        0      0
+35         Playground Design 35        0      0
 ```
 
 ---

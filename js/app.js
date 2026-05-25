@@ -23,6 +23,21 @@ const DESIGNS = [
   { id: 18, name: 'Playground Design 18',       slug: '18-placeholder',          active: false },
   { id: 19, name: 'Playground Design 19',       slug: '19-placeholder',          active: false },
   { id: 20, name: 'Playground Design 20',       slug: '20-placeholder',          active: false },
+  { id: 21, name: 'Playground Design 21',       slug: '21-placeholder',          active: false },
+  { id: 22, name: 'Playground Design 22',       slug: '22-placeholder',          active: false },
+  { id: 23, name: 'Playground Design 23',       slug: '23-placeholder',          active: false },
+  { id: 24, name: 'Playground Design 24',       slug: '24-placeholder',          active: false },
+  { id: 25, name: 'Playground Design 25',       slug: '25-placeholder',          active: false },
+  { id: 26, name: 'Playground Design 26',       slug: '26-placeholder',          active: false },
+  { id: 27, name: 'Playground Design 27',       slug: '27-placeholder',          active: false },
+  { id: 28, name: 'Playground Design 28',       slug: '28-placeholder',          active: false },
+  { id: 29, name: 'Playground Design 29',       slug: '29-placeholder',          active: false },
+  { id: 30, name: 'Playground Design 30',       slug: '30-placeholder',          active: false },
+  { id: 31, name: 'Playground Design 31',       slug: '31-placeholder',          active: false },
+  { id: 32, name: 'Playground Design 32',       slug: '32-placeholder',          active: false },
+  { id: 33, name: 'Playground Design 33',       slug: '33-placeholder',          active: false },
+  { id: 34, name: 'Playground Design 34',       slug: '34-placeholder',          active: false },
+  { id: 35, name: 'Playground Design 35',       slug: '35-placeholder',          active: false },
 ];
 
 // ── Rate-limiting — both buttons share a 15-second cooldown ──────────────────
