@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Upload Photo — Playground Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:          #060606;
+      --bg-1:        #0d0d0d;
+      --bg-card:     #111;
+      --border:      rgba(255,255,255,0.08);
+      --border-strong: rgba(255,255,255,0.18);
+      --fg:          #f0f0f0;
+      --fg-muted:    rgba(240,240,240,0.45);
+      --cyan:        #00e5ff;
+      --lime:        #b8ff3d;
+      --red:         #ff4d6d;
+      --radius:      12px;
+      --glow-cyan:   0 0 20px rgba(0,229,255,0.35);
+      --glow-lime:   0 0 20px rgba(184,255,61,0.35);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 2rem 1.25rem 4rem;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom, transparent 0px, transparent 3px, rgba(0,0,0,0.08) 3px, rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1.5rem 1.5rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(0,229,255,0.06) 0%, rgba(184,255,61,0.04) 100%);
+    }
+
+    .logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--fg);
+      line-height: 1.2;
+    }
+
+    h1 span {
+      background: linear-gradient(90deg, var(--cyan), var(--lime));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .field-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    select, input[type="password"] {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--fg);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+
+    select:focus, input[type="password"]:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 2px rgba(0,229,255,0.15);
+    }
+
+    select option { background: #111; }
+
+    /* Photo drop zone */
+    .drop-zone {
+      border: 2px dashed var(--border-strong);
+      border-radius: var(--radius);
+      padding: 2rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+
+    .drop-zone:hover, .drop-zone.drag-over {
+      border-color: var(--cyan);
+      background: rgba(0,229,255,0.04);
+    }
+
+    .drop-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .drop-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      filter: grayscale(0.5);
+    }
+
+    .drop-label {
+      color: var(--fg-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .drop-label strong {
+      color: var(--cyan);
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Preview */
+    #preview-wrap {
+      display: none;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    #preview-wrap img {
+      width: 100%;
+      display: block;
+      max-height: 280px;
+      object-fit: cover;
+    }
+
+    .preview-badge {
+      position: absolute;
+      bottom: 0.5rem;
+      right: 0.5rem;
+      background: rgba(0,0,0,0.75);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.25rem 0.6rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--lime);
+    }
+
+    /* Upload button */
+    .btn-upload {
+      width: 100%;
+      padding: 1rem;
+      background: var(--cyan);
+      color: #000;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s, box-shadow 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      letter-spacing: 0.03em;
+    }
+
+    .btn-upload:hover:not(:disabled) {
+      box-shadow: var(--glow-cyan);
+      transform: translateY(-1px);
+    }
+
+    .btn-upload:active:not(:disabled) { transform: translateY(0); }
+
+    .btn-upload:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Progress bar */
+    .progress-wrap {
+      display: none;
+      background: rgba(255,255,255,0.06);
+      border-radius: 99px;
+      height: 6px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--cyan), var(--lime));
+      border-radius: 99px;
+      transition: width 0.3s ease;
+    }
+
+    /* Status messages */
+    .status {
+      display: none;
+      padding: 0.9rem 1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .status.success {
+      background: rgba(184,255,61,0.1);
+      border: 1px solid rgba(184,255,61,0.3);
+      color: var(--lime);
+    }
+
+    .status.error {
+      background: rgba(255,77,109,0.1);
+      border: 1px solid rgba(255,77,109,0.3);
+      color: var(--red);
+    }
+
+    .status a {
+      color: inherit;
+      font-weight: 700;
+    }
+
+    /* Token section */
+    .token-row {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .token-row input {
+      flex: 1;
+    }
+
+    .btn-clear-token {
+      background: rgba(255,77,109,0.12);
+      border: 1px solid rgba(255,77,109,0.25);
+      color: var(--red);
+      border-radius: 8px;
+      padding: 0 0.75rem;
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .btn-clear-token:hover { background: rgba(255,77,109,0.22); }
+
+    .token-hint {
+      font-size: 0.72rem;
+      color: var(--fg-muted);
+      line-height: 1.6;
+      margin-top: 0.3rem;
+    }
+
+    .token-hint a { color: var(--cyan); }
+
+    .token-stored-notice {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--lime);
+      margin-top: 0.3rem;
+    }
+
+    /* Resize info */
+    .resize-note {
+      font-size: 0.72rem;
+      color: var(--fg-muted);
+      font-family: 'JetBrains Mono', monospace;
+      text-align: center;
+    }
+
+    /* Design name display */
+    .design-name {
+      font-size: 0.75rem;
+      color: var(--cyan);
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 0.3rem;
+    }
+
+    /* Footer */
+    .page-footer {
+      margin-top: 2rem;
+      font-size: 0.7rem;
+      color: var(--fg-muted);
+      font-family: 'JetBrains Mono', monospace;
+      text-align: center;
+    }
+
+    .page-footer a { color: var(--fg-muted); }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="logo">Playground Design Challenge</div>
+      <h1>Upload <span>Design Photo</span></h1>
+    </div>
+
+    <div class="card-body">
+
+      <!-- Design selector -->
+      <div>
+        <div class="field-label">Design Number</div>
+        <select id="design-select">
+          <option value="">— Select a design —</option>
+          <option value="1">Design #01 — Beach and Sand Grass Gap</option>
+          <option value="2">Design #02</option>
+          <option value="3">Design #03</option>
+          <option value="4">Design #04</option>
+          <option value="5">Design #05</option>
+          <option value="6">Design #06</option>
+          <option value="7">Design #07</option>
+          <option value="8">Design #08</option>
+          <option value="9">Design #09</option>
+          <option value="10">Design #10</option>
+          <option value="11">Design #11</option>
+          <option value="12">Design #12</option>
+          <option value="13">Design #13</option>
+          <option value="14">Design #14</option>
+          <option value="15">Design #15</option>
+          <option value="16">Design #16</option>
+          <option value="17">Design #17</option>
+          <option value="18">Design #18</option>
+          <option value="19">Design #19</option>
+          <option value="20">Design #20</option>
+        </select>
+      </div>
+
+      <!-- Photo picker -->
+      <div>
+        <div class="field-label">Photo</div>
+        <div class="drop-zone" id="drop-zone">
+          <input type="file" id="file-input" accept="image/*" capture="environment">
+          <div class="drop-icon">📷</div>
+          <div class="drop-label">
+            <strong>Tap to take / choose a photo</strong>
+            JPEG, PNG, HEIC supported
+          </div>
+        </div>
+        <div id="preview-wrap">
+          <img id="preview-img" src="" alt="Preview">
+          <div class="preview-badge" id="preview-badge"></div>
+        </div>
+      </div>
+
+      <!-- GitHub Token -->
+      <div id="token-section">
+        <div class="field-label">GitHub Token</div>
+        <div class="token-row">
+          <input type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxx" autocomplete="off">
+          <button class="btn-clear-token" id="clear-token-btn" onclick="clearToken()">Clear</button>
+        </div>
+        <div class="token-hint">
+          Stored only in this browser. Never sent anywhere except GitHub's API.<br>
+          <a href="https://github.com/settings/tokens/new?scopes=public_repo&description=Playground+Upload" target="_blank">
+            Generate token → (needs "public_repo" scope)
+          </a>
+        </div>
+        <div class="token-stored-notice" id="token-stored-notice" style="display:none;">
+          &#10003; Token saved on this device
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div class="progress-wrap" id="progress-wrap">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+
+      <!-- Status -->
+      <div class="status" id="status-msg"></div>
+
+      <!-- Upload button -->
+      <button class="btn-upload" id="upload-btn" onclick="startUpload()" disabled>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+        Upload to Website
+      </button>
+
+      <div class="resize-note" id="resize-note" style="display:none;"></div>
+
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <a href="index.html">← Back to site</a> &nbsp;|&nbsp; Photo goes live in ~60 seconds after upload
+  </div>
+
+  <script>
+    const REPO  = 'Robsstuff/playground-design-challenge';
+    const API   = 'https://api.github.com/repos/' + REPO + '/contents/';
+    const TOKEN_KEY = 'pg_gh_token';
+    const MAX_PX = 2000; // resize photos to max 2000px on longest side
+
+    let selectedFile = null;
+
+    // ── Token persistence ─────────────────────────────────────────────────────
+    function loadToken() {
+      const t = localStorage.getItem(TOKEN_KEY) || '';
+      if (t) {
+        document.getElementById('token-input').value = t;
+        document.getElementById('token-stored-notice').style.display = 'block';
+      }
+    }
+
+    function saveToken(t) {
+      localStorage.setItem(TOKEN_KEY, t);
+      document.getElementById('token-stored-notice').style.display = 'block';
+    }
+
+    function clearToken() {
+      localStorage.removeItem(TOKEN_KEY);
+      document.getElementById('token-input').value = '';
+      document.getElementById('token-stored-notice').style.display = 'none';
+    }
+
+    // ── Validation — enable upload button when ready ──────────────────────────
+    function checkReady() {
+      const design = document.getElementById('design-select').value;
+      const token  = document.getElementById('token-input').value.trim();
+      const ready  = design && token && selectedFile;
+      document.getElementById('upload-btn').disabled = !ready;
+    }
+
+    document.getElementById('design-select').addEventListener('change', checkReady);
+    document.getElementById('token-input').addEventListener('input', () => {
+      const t = document.getElementById('token-input').value.trim();
+      if (t) saveToken(t);
+      checkReady();
+    });
+
+    // ── File picker ───────────────────────────────────────────────────────────
+    const fileInput = document.getElementById('file-input');
+    fileInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      selectedFile = file;
+
+      // Show preview
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const img = document.getElementById('preview-img');
+        img.src = ev.target.result;
+        document.getElementById('preview-wrap').style.display = 'block';
+        document.getElementById('drop-zone').style.display = 'none';
+        const sizeKB = Math.round(file.size / 1024);
+        document.getElementById('preview-badge').textContent =
+          file.name + ' — ' + (sizeKB > 999 ? (sizeKB/1024).toFixed(1)+'MB' : sizeKB+'KB');
+      };
+      reader.readAsDataURL(file);
+      checkReady();
+    });
+
+    // ── Resize + base64 ───────────────────────────────────────────────────────
+    function resizeAndEncode(file) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+          let { width, height } = img;
+          const longest = Math.max(width, height);
+          const note = document.getElementById('resize-note');
+
+          if (longest > MAX_PX) {
+            const scale = MAX_PX / longest;
+            width  = Math.round(width  * scale);
+            height = Math.round(height * scale);
+            note.textContent = `Resized to ${width}×${height}px for faster upload`;
+            note.style.display = 'block';
+          } else {
+            note.style.display = 'none';
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width  = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          URL.revokeObjectURL(url);
+
+          // Export as JPEG at 88% quality
+          const dataURL = canvas.toDataURL('image/jpeg', 0.88);
+          const base64  = dataURL.split(',')[1];
+          resolve(base64);
+        };
+        img.src = url;
+      });
+    }
+
+    // ── Progress helper ───────────────────────────────────────────────────────
+    function setProgress(pct) {
+      const wrap = document.getElementById('progress-wrap');
+      const bar  = document.getElementById('progress-bar');
+      wrap.style.display = 'block';
+      bar.style.width = pct + '%';
+    }
+
+    function showStatus(type, html) {
+      const el = document.getElementById('status-msg');
+      el.className = 'status ' + type;
+      el.innerHTML = html;
+      el.style.display = 'block';
+    }
+
+    // ── Main upload flow ──────────────────────────────────────────────────────
+    async function startUpload() {
+      const designNum = document.getElementById('design-select').value;
+      const token     = document.getElementById('token-input').value.trim();
+      const btn       = document.getElementById('upload-btn');
+
+      if (!designNum || !token || !selectedFile) return;
+
+      btn.disabled = true;
+      btn.textContent = 'Uploading…';
+      document.getElementById('status-msg').style.display = 'none';
+      setProgress(10);
+
+      try {
+        // 1. Resize + encode
+        const base64 = await resizeAndEncode(selectedFile);
+        setProgress(35);
+
+        // 2. Check for existing file SHA
+        const path = `assets/design${designNum}/photo.jpg`;
+        let sha = '';
+        try {
+          const checkRes = await fetch(API + path, {
+            headers: {
+              'Authorization': 'token ' + token,
+              'Accept': 'application/vnd.github.v3+json'
+            }
+          });
+          if (checkRes.ok) {
+            const checkData = await checkRes.json();
+            sha = checkData.sha;
+          }
+        } catch {}
+        setProgress(55);
+
+        // 3. Upload
+        const body = {
+          message: `Upload photo for Design #${designNum.padStart(2,'0')} from phone`,
+          content: base64,
+        };
+        if (sha) body.sha = sha;
+
+        const uploadRes = await fetch(API + path, {
+          method: 'PUT',
+          headers: {
+            'Authorization': 'token ' + token,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        });
+
+        setProgress(90);
+
+        if (!uploadRes.ok) {
+          const err = await uploadRes.json().catch(() => ({}));
+          throw new Error(err.message || 'HTTP ' + uploadRes.status);
+        }
+
+        setProgress(100);
+
+        const designUrl = `https://robsstuff.github.io/playground-design-challenge/designs/${designNum}-${getSlug(designNum)}.html`;
+        showStatus('success',
+          '&#10003; Photo uploaded successfully!<br>' +
+          'Live in ~60 seconds &rarr; <a href="' + designUrl + '" target="_blank">View Design #' + designNum.padStart(2,'0') + '</a>'
+        );
+
+        btn.textContent = 'Upload Another';
+        btn.disabled = false;
+        // Reset for next upload
+        selectedFile = null;
+        document.getElementById('file-input').value = '';
+        document.getElementById('preview-wrap').style.display = 'none';
+        document.getElementById('drop-zone').style.display = 'block';
+        setTimeout(() => setProgress(0), 2000);
+
+      } catch (err) {
+        setProgress(0);
+        document.getElementById('progress-wrap').style.display = 'none';
+        showStatus('error', '&#9888; Upload failed: ' + err.message + '<br><small>Check your token has public_repo access.</small>');
+        btn.textContent = 'Upload to Website';
+        btn.disabled = false;
+      }
+    }
+
+    function getSlug(num) {
+      const slugs = {
+        1: 'beach-sand-grass-gap',
+      };
+      return slugs[num] || 'placeholder';
+    }
+
+    // ── Init ──────────────────────────────────────────────────────────────────
+    loadToken();
+    checkReady();
+  </script>
+</body>
+</html>
