@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design #18 — MotorBike</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    body { padding-top: var(--nav-h); }
+
+    /* Photo display */
+    .photo-frame {
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+      overflow: hidden;
+      transition: border-color var(--transition);
+    }
+    .photo-frame:hover { border-color: var(--border-strong); }
+    .photo-frame img {
+      width: 100%;
+      display: block;
+      max-height: 75vh;
+      object-fit: cover;
+    }
+
+    /* Photo gallery */
+    .photo-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .gallery-item {
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: border-color var(--transition);
+    }
+    .gallery-item:hover { border-color: var(--border-strong); }
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    /* Video */
+    .video-wrap {
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+      overflow: hidden;
+      background: #000;
+    }
+    .video-wrap video {
+      width: 100%;
+      display: block;
+      max-height: 75vh;
+    }
+
+    /* Section utility */
+    .section-wrap {
+      max-width: 1280px;
+      margin: 0 auto 2.5rem;
+      padding: 0 2rem;
+    }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+  </style>
+</head>
+<body class="page-enter">
+
+  <!-- ── Nav ────────────────────────────────────────────────────────────── -->
+  <nav class="nav">
+    <a class="nav-logo" href="../index.html">PLAYGROUND<span>//</span>DESIGN</a>
+    <div class="nav-links">
+      <a class="nav-link" href="../index.html">Home</a>
+      <a class="nav-link" href="../designs.html">All Designs</a>
+      <a class="nav-link" href="../leaderboard.html">Leaderboard</a>
+    </div>
+  </nav>
+
+  <!-- ── Vote bar ───────────────────────────────────────────────────────── -->
+  <div class="vote-bar">
+    <a class="vote-bar-back" href="../designs.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      All Designs
+    </a>
+    <div class="vote-bar-title">
+      <span># 18</span>MotorBike
+    </div>
+    <div class="vote-bar-actions">
+      <button class="btn-like" onclick="handleLike(18)" title="Like this design">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        Like
+        <span class="counter-badge" id="like-count">0</span>
+      </button>
+      <button class="btn-invest" onclick="handleInvest(18)" title="Invest $100 (pretend)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Invest $100
+        <span class="counter-badge" id="money-count">$0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Design header ──────────────────────────────────────────────────── -->
+  <div style="padding: 3.5rem 2rem 2rem; max-width: 1280px; margin: 0 auto;">
+    <div class="design-badge">Design Entry &nbsp;///&nbsp; # 18 of 35</div>
+    <h1 class="design-page-title">MotorBike</h1>
+  </div>
+
+  <!-- ── Description placeholder ─────────────────────────────────────────── -->
+  <section class="section-wrap">
+    <div class="terminal-card">
+      <div class="terminal-prompt">Description</div>
+      <p class="description-text description-placeholder">Description coming soon — the designer's explanation of this playground concept will appear here.</p>
+    </div>
+  </section>
+
+  <!-- ── Photo ────────────────────────────────────────────────────────────── -->
+  <section class="section-wrap">
+    <div class="section-label">Design Photo</div>
+    <div class="photo-frame">
+      <img src="../assets/design18/photo.jpeg" alt="MotorBike playground design photo" loading="lazy">
+    </div>
+  </section>
+
+  <!-- ── Extra photos ─────────────────────────────────────────────────────── -->
+  <section class="section-wrap">
+    <div class="section-label">More Photos</div>
+    <div class="photo-gallery">
+      <div class="gallery-item"><img src="../assets/design18/extra1.png" alt="MotorBike additional photo 1" loading="lazy"></div>
+    </div>
+  </section>
+
+  <!-- ── Video ────────────────────────────────────────────────────────────── -->
+  <section class="section-wrap">
+    <div class="section-label">Design Video</div>
+    <div class="video-wrap">
+      <video controls playsinline preload="metadata" poster="../assets/design18/photo.jpeg">
+        <source src="../assets/design18/video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    Playground Design Challenge &nbsp;//&nbsp; Design #18 &nbsp;//&nbsp;
+    <a href="../leaderboard.html" style="color:var(--cyan);text-decoration:none;">View Leaderboard</a>
+    <br><span style="font-size:0.72rem;opacity:0.55;">* All work was completed and generated by students naturally. Some AI models were used by the teacher to enhance visualisations but these were based on the students plans.</span>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => { initDesignPage(18); });
+  </script>
+</body>
+</html>

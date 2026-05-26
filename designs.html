@@ -24,22 +24,6 @@
       margin-top: 1rem;
     }
     .dnav-count-chip span { color: var(--cyan); }
-
-    /* Active badge on design 1 row */
-    .dnav-active-badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--lime);
-      border: 1px solid rgba(184,255,61,0.4);
-      border-radius: 99px;
-      padding: 0.15rem 0.5rem;
-      background: rgba(184,255,61,0.08);
-      margin-left: 0.5rem;
-      vertical-align: middle;
-    }
   </style>
 </head>
 <body class="page-enter">
@@ -57,392 +41,200 @@
   <!-- ── Hero ───────────────────────────────────────────────────────────── -->
   <div class="dnav-hero">
     <p class="section-label">Navigate</p>
-    <h1 class="section-title" style="margin-bottom: 0.25rem;">All 20 Designs</h1>
+    <h1 class="section-title" style="margin-bottom: 0.25rem;">All 35 Designs</h1>
     <p style="color: var(--fg-muted); font-size: 0.95rem; max-width: 480px;">
       Browse every entry and jump straight to any design to explore, vote, and invest.
     </p>
     <div class="dnav-count-chip">
-      <span>1</span> of 20 entries live &nbsp;·&nbsp; <span>19</span> coming soon
+      <span>27</span> of 35 entries live &nbsp;&middot;&nbsp; <span>8</span> coming soon
     </div>
   </div>
 
   <!-- ── Design list ────────────────────────────────────────────────────── -->
   <div class="dnav-list">
 
-    <!-- ── Design 1 — active ── -->
-    <a class="dnav-row clickable reveal" href="designs/1-beach-sand-grass-gap.html" data-design-id="1">
-      <div class="dnav-num"># 01</div>
-      <div class="dnav-thumb">
-        <img src="assets/design1/photo.jpg" alt="Beach and Sand Grass Gap">
-      </div>
-      <div class="dnav-info">
-        <div class="dnav-name">
-          Beach and Sand Grass Gap
-          <span class="dnav-active-badge">Live</span>
-        </div>
-        <div class="dnav-stats">
-          <span class="dnav-stat">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-            <span class="val card-likes">0</span> likes
-          </span>
-          <span class="dnav-stat">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            <span class="val card-money">$0</span>
-          </span>
-        </div>
-      </div>
-      <div class="dnav-action">
-        View
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>
+    <a class="dnav-row" href="designs/1-beachy-water-park.html">
+      <span class="dnav-num">01</span>
+      <span class="dnav-name">Beachy Water Park</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/2-star-wars.html">
+      <span class="dnav-num">02</span>
+      <span class="dnav-name">Star Wars</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/3-laser-tag-zone.html">
+      <span class="dnav-num">03</span>
+      <span class="dnav-name">Laser Tag Zone</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/4-star-wars-playground.html">
+      <span class="dnav-num">04</span>
+      <span class="dnav-name">Star Wars Playground</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/5-the-cosy-cafe.html">
+      <span class="dnav-num">05</span>
+      <span class="dnav-name">The Cosy Cafe</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/6-out-of-the-universe-land.html">
+      <span class="dnav-num">06</span>
+      <span class="dnav-name">Out of the Universe Land</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/7-capybara-skatepark.html">
+      <span class="dnav-num">07</span>
+      <span class="dnav-name">Capybara Skatepark</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/8-the-secret-snake-park.html">
+      <span class="dnav-num">08</span>
+      <span class="dnav-name">The Secret Snake Park</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/9-millys-house.html">
+      <span class="dnav-num">09</span>
+      <span class="dnav-name">Milly's House</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/10-ronaldo-soccer.html">
+      <span class="dnav-num">10</span>
+      <span class="dnav-name">Ronaldo Soccer!</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/11-pet-playland.html">
+      <span class="dnav-num">11</span>
+      <span class="dnav-name">Pet Playland</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/12-space-ground.html">
+      <span class="dnav-num">12</span>
+      <span class="dnav-name">Space Ground</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/13-a-dogs-dream-home.html">
+      <span class="dnav-num">13</span>
+      <span class="dnav-name">A Dog's Dream Home</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/14-jungle-treehouse.html">
+      <span class="dnav-num">14</span>
+      <span class="dnav-name">Jungle Treehouse</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/15-soccer-mad.html">
+      <span class="dnav-num">15</span>
+      <span class="dnav-name">Soccer Mad</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/16-space-race-world.html">
+      <span class="dnav-num">16</span>
+      <span class="dnav-name">Space Race World</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/17-pink.html">
+      <span class="dnav-num">17</span>
+      <span class="dnav-name">Pink</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/18-motorbike.html">
+      <span class="dnav-num">18</span>
+      <span class="dnav-name">MotorBike</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/19-chill-pool.html">
+      <span class="dnav-num">19</span>
+      <span class="dnav-name">Chill Pool</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/20-jungle-world.html">
+      <span class="dnav-num">20</span>
+      <span class="dnav-name">Jungle World</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/21-ruins.html">
+      <span class="dnav-num">21</span>
+      <span class="dnav-name">Ruins</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/22-pets-pets-pets.html">
+      <span class="dnav-num">22</span>
+      <span class="dnav-name">Pets Pets Pets</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/23-space.html">
+      <span class="dnav-num">23</span>
+      <span class="dnav-name">Space</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/24-pool-and-spa.html">
+      <span class="dnav-num">24</span>
+      <span class="dnav-name">Pool and Spa</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/25-music-land.html">
+      <span class="dnav-num">25</span>
+      <span class="dnav-name">Music Land</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/26-its-raining-food.html">
+      <span class="dnav-num">26</span>
+      <span class="dnav-name">It's Raining Food!</span>
+      <span class="dnav-arrow">→</span>
+    </a>
+    <a class="dnav-row" href="designs/27-cosy-beach.html">
+      <span class="dnav-num">27</span>
+      <span class="dnav-name">Cosy Beach</span>
+      <span class="dnav-arrow">→</span>
     </a>
 
-    <!-- ── Designs 2–20 — coming soon ── -->
-    <div class="dnav-row locked reveal" data-design-id="2">
-      <div class="dnav-num"># 02</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 2</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
+    <div class="dnav-row dnav-locked">
+      <span class="dnav-num">28</span>
+      <span class="dnav-name">Playground Design 28</span>
+      <span class="dnav-badge">COMING SOON</span>
+    </div>
+    <div class="dnav-row dnav-locked">
+      <span class="dnav-num">29</span>
+      <span class="dnav-name">Playground Design 29</span>
+      <span class="dnav-badge">COMING SOON</span>
+    </div>
+    <div class="dnav-row dnav-locked">
+      <span class="dnav-num">30</span>
+      <span class="dnav-name">Playground Design 30</span>
+      <span class="dnav-badge">COMING SOON</span>
+    </div>
+    <div class="dnav-row dnav-locked">
+      <span class="dnav-num">31</span>
+      <span class="dnav-name">Playground Design 31</span>
+      <span class="dnav-badge">COMING SOON</span>
+    </div>
+    <div class="dnav-row dnav-locked">
+      <span class="dnav-num">32</span>
+      <span class="dnav-name">Playground Design 32</span>
+      <span class="dnav-badge">COMING SOON</span>
+    </div>
+    <div class="dnav-row dnav-locked">
+      <span class="dnav-num">33</span>
+      <span class="dnav-name">Playground Design 33</span>
+      <span class="dnav-badge">COMING SOON</span>
+    </div>
+    <div class="dnav-row dnav-locked">
+      <span class="dnav-num">34</span>
+      <span class="dnav-name">Playground Design 34</span>
+      <span class="dnav-badge">COMING SOON</span>
+    </div>
+    <div class="dnav-row dnav-locked">
+      <span class="dnav-num">35</span>
+      <span class="dnav-name">Playground Design 35</span>
+      <span class="dnav-badge">COMING SOON</span>
     </div>
 
-    <div class="dnav-row locked reveal" data-design-id="3">
-      <div class="dnav-num"># 03</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 3</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="4">
-      <div class="dnav-num"># 04</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 4</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="5">
-      <div class="dnav-num"># 05</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 5</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="6">
-      <div class="dnav-num"># 06</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 6</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="7">
-      <div class="dnav-num"># 07</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 7</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="8">
-      <div class="dnav-num"># 08</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 8</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="9">
-      <div class="dnav-num"># 09</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 9</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="10">
-      <div class="dnav-num"># 10</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 10</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="11">
-      <div class="dnav-num"># 11</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 11</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="12">
-      <div class="dnav-num"># 12</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 12</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="13">
-      <div class="dnav-num"># 13</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 13</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="14">
-      <div class="dnav-num"># 14</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 14</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="15">
-      <div class="dnav-num"># 15</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 15</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="16">
-      <div class="dnav-num"># 16</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 16</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="17">
-      <div class="dnav-num"># 17</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 17</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="18">
-      <div class="dnav-num"># 18</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 18</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="19">
-      <div class="dnav-num"># 19</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 19</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="20">
-      <div class="dnav-num"># 20</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 20</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="21">
-      <div class="dnav-num"># 21</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 21</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="22">
-      <div class="dnav-num"># 22</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 22</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="23">
-      <div class="dnav-num"># 23</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 23</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="24">
-      <div class="dnav-num"># 24</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 24</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="25">
-      <div class="dnav-num"># 25</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 25</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="26">
-      <div class="dnav-num"># 26</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 26</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="27">
-      <div class="dnav-num"># 27</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 27</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="28">
-      <div class="dnav-num"># 28</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 28</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="29">
-      <div class="dnav-num"># 29</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 29</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="30">
-      <div class="dnav-num"># 30</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 30</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="31">
-      <div class="dnav-num"># 31</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 31</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="32">
-      <div class="dnav-num"># 32</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 32</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="33">
-      <div class="dnav-num"># 33</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 33</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="34">
-      <div class="dnav-num"># 34</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 34</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-    <div class="dnav-row locked reveal" data-design-id="35">
-      <div class="dnav-num"># 35</div>
-      <div class="dnav-thumb"><div class="dnav-thumb-placeholder">Soon</div></div>
-      <div class="dnav-info">
-        <div class="dnav-name">Playground Design 35</div>
-        <div class="dnav-stats"><span class="dnav-stat"><span class="val card-likes">0</span>&nbsp;likes</span><span class="dnav-stat"><span class="val card-money">$0</span></span></div>
-      </div>
-      <div class="dnav-action locked-action">Soon</div>
-    </div>
-
-  </div><!-- /dnav-list -->
+  </div>
 
   <footer class="site-footer">
-    Playground Design Challenge &nbsp;//&nbsp; All Designs &nbsp;//&nbsp;
-    <a href="leaderboard.html" style="color:var(--cyan);text-decoration:none;">Leaderboard</a>
+    Playground Design Challenge &nbsp;//&nbsp; All 35 Designs &nbsp;//&nbsp;
+    <a href="leaderboard.html" style="color:var(--cyan);text-decoration:none;">View Leaderboard</a>
     <br><span style="font-size:0.72rem;opacity:0.55;">* All work was completed and generated by students naturally. Some AI models were used by the teacher to enhance visualisations but these were based on the students plans.</span>
   </footer>
 
