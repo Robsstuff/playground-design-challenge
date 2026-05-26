@@ -62,7 +62,18 @@ function isConfigured() {
     && !APPS_SCRIPT_URL.includes('SETUP_REQUIRED');
 }
 
-// ── JSONP fetch (avoids CORS issues with Apps Script) ────────────────────────
+// ── Sheets fetch — fetch() first, JSONP fallback ─────────────────────────────
+// Apps Script (Anyone, even anonymous) supports CORS, so fetch() works and is
+// far more reliable than JSONP across browsers and school networks.
+function sheetsFetch(url) {
+  return fetch(url, { redirect: 'follow' })
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .catch(() => jsonpFetch(url));   // fallback if fetch is blocked
+}
+
 function jsonpFetch(url) {
   return new Promise((resolve, reject) => {
     const cbName = '_jscb_' + Math.random().toString(36).slice(2);
@@ -184,7 +195,7 @@ function initDesignPage(designId) {
 
   // Fetch live from Sheets if configured
   if (isConfigured()) {
-    jsonpFetch(APPS_SCRIPT_URL + '?action=get&id=' + designId)
+    sheetsFetch(APPS_SCRIPT_URL + '?action=get&id=' + designId)
       .then(data => {
         if (data && !data.error) {
           setLocalVotes(designId, data.likes, data.money);
@@ -220,7 +231,7 @@ async function handleLike(designId) {
 
   if (!isConfigured()) return;
   try {
-    const data = await jsonpFetch(APPS_SCRIPT_URL + '?action=like&id=' + designId);
+    const data = await sheetsFetch(APPS_SCRIPT_URL + '?action=like&id=' + designId);
     if (data && !data.error) {
       setLocalVotes(designId, data.likes, data.money);
       rollNumber(likeEl, data.likes);
@@ -252,7 +263,7 @@ async function handleInvest(designId) {
 
   if (!isConfigured()) return;
   try {
-    const data = await jsonpFetch(APPS_SCRIPT_URL + '?action=invest&id=' + designId);
+    const data = await sheetsFetch(APPS_SCRIPT_URL + '?action=invest&id=' + designId);
     if (data && !data.error) {
       setLocalVotes(designId, data.likes, data.money);
       rollNumber(likeEl, data.likes);
@@ -278,7 +289,7 @@ async function initHomePage() {
   updateHomeCards(localAll);
   if (!isConfigured()) return;
   try {
-    const data = await jsonpFetch(APPS_SCRIPT_URL + '?action=all');
+    const data = await sheetsFetch(APPS_SCRIPT_URL + '?action=all');
     if (Array.isArray(data)) {
       const byId = {};
       data.forEach(d => { byId[d.id] = d; });
@@ -310,7 +321,7 @@ async function initLeaderboard() {
     return;
   }
   try {
-    const data = await jsonpFetch(APPS_SCRIPT_URL + '?action=all');
+    const data = await sheetsFetch(APPS_SCRIPT_URL + '?action=all');
     if (Array.isArray(data)) renderLeaderboard(data);
   } catch {
     const el = document.getElementById('lb-likes');
@@ -318,7 +329,7 @@ async function initLeaderboard() {
   }
   setInterval(async () => {
     try {
-      const data = await jsonpFetch(APPS_SCRIPT_URL + '?action=all');
+      const data = await sheetsFetch(APPS_SCRIPT_URL + '?action=all');
       if (Array.isArray(data)) renderLeaderboard(data);
     } catch {}
   }, 60000);
