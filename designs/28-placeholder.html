@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="../styles.css">
   <style>
     body { padding-top: var(--nav-h); }
+    .video-wrap { border-radius: var(--radius); border: 1px solid var(--border); box-shadow: 0 20px 80px rgba(0,0,0,0.8); overflow: hidden; background: #000; }
+    .video-wrap video { width: 100%; display: block; max-height: 75vh; }
+    .section-wrap { max-width: 1280px; margin: 0 auto 2.5rem; padding: 0 2rem; }
+    .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; }
   </style>
 </head>
 <body class="page-enter">
@@ -74,6 +78,16 @@
       Interactive Effects Coming Soon
     </div>
   </div>
+
+  
+  <section class="section-wrap">
+    <div class="section-label">Build Time-lapse</div>
+    <div class="video-wrap">
+      <video autoplay loop muted playsinline controls>
+        <source src="../assets/design28/timelapse.mp4" type="video/mp4">
+      </video>
+    </div>
+  </section>
 
   <footer class="site-footer">
     Playground Design Challenge &nbsp;//&nbsp; Design #28 &nbsp;//&nbsp;
