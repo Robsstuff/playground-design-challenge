@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Diorama — Auto Drift</title>
+<title>Diorama - Auto Drift</title>
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -28,7 +28,7 @@
       0 20px 40px rgba(0,0,0,0.6);
   }
 
-  /* Ken Burns: slow continuous zoom + gentle pan — no reset, loops */
+  /* Ken Burns: slow continuous zoom + gentle pan - no reset, loops */
   #kb {
     position: absolute;
     inset: 0;
@@ -124,13 +124,13 @@
   // Each layer drifts on its own Lissajous path:
   //   x(t) = amp * sin(fX*t + phX) + small_harmonic
   //   y(t) = amp * cos(fY*t + phY) + small_harmonic
-  // Different phases between layers create the depth illusion —
+  // Different phases between layers create the depth illusion -
   // at any moment layers are in different positions relative to each other.
 
   let t = 0;
 
   (function loop() {
-    t += 0.004;   // drift speed — lower = slower, dreamier
+    t += 0.004;   // drift speed - lower = slower, dreamier
 
     for (const { el, amp, phX, phY, fX, fY } of layers) {
       const x = amp * Math.sin(fX * t + phX) + (amp * 0.25) * Math.sin(fX * 1.7 * t + phX + 1);

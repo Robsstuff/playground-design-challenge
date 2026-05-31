@@ -46,7 +46,7 @@
 
   /* ---- Parallax layers ---- */
   /* Each layer is 160% the container size, centred via negative offsets.
-     At max drag (160px) the foreground (speed 0.95) shifts 152px — well
+     At max drag (160px) the foreground (speed 0.95) shifts 152px - well
      within the 30% (288px) bleed so edges are never revealed. */
   .lyr {
     position: absolute;
@@ -59,10 +59,10 @@
     transform: translate3d(0, 0, 0);
   }
 
-  /* Background — full image, moves slowest */
+  /* Background - full image, moves slowest */
   #l0 { z-index: 1; }
 
-  /* Sky / clouds — top strip (roughly top 20% of frame) fades out by 38% */
+  /* Sky / clouds - top strip (roughly top 20% of frame) fades out by 38% */
   #l1 {
     z-index: 2;
     -webkit-mask-image: linear-gradient(to bottom,
@@ -71,7 +71,7 @@
       black 0%, black 20%, transparent 38%);
   }
 
-  /* Foreground flanks — left ~25% and right ~25% where pipe cleaners & hoops live */
+  /* Foreground flanks - left ~25% and right ~25% where pipe cleaners & hoops live */
   #l2 {
     z-index: 3;
     -webkit-mask-image: linear-gradient(to right,
@@ -130,7 +130,7 @@
 
   // Speed multipliers: how much each layer moves relative to total drag.
   // bg=0.10, sky=0.42, fg=0.95  →  at max drag (160px) the visible
-  // separation between bg and fg is 136px — very dramatic.
+  // separation between bg and fg is 136px - very dramatic.
   const layers = [
     { el: document.getElementById('l0'), spd: 0.10 },  // background: barely moves
     { el: document.getElementById('l1'), spd: 0.42 },  // sky/clouds:  halfway
