@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Leaderboard — Playground Design Challenge</title>
+  <title>Leaderboard - Playground Design Challenge</title>
   <link rel="stylesheet" href="styles.css">
   <style>
     body { padding-top: var(--nav-h); }
@@ -27,6 +27,26 @@
       margin-top: 0.5rem;
     }
     #refresh-ts { color: var(--cyan); }
+
+    .lb-entry { align-items: center; }
+    .lb-thumb {
+      width: 56px;
+      height: 42px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+      margin-right: 0.75rem;
+    }
+    .lb-thumb-blank {
+      width: 56px;
+      height: 42px;
+      flex-shrink: 0;
+      margin-right: 0.75rem;
+      background: var(--bg-1);
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
 
     .lb-totals {
       display: flex;
@@ -56,7 +76,7 @@
       padding: 4rem 2rem;
     }
 
-    /* Override bar colour context — set here directly since panels are siblings */
+    /* Override bar colour context - set here directly since panels are siblings */
     #lb-likes .lb-bar { background: var(--cyan); box-shadow: var(--glow-cyan); }
     #lb-money .lb-bar { background: var(--lime); box-shadow: var(--glow-lime); }
 
@@ -81,15 +101,15 @@
     <div class="lb-hero-inner">
       <p class="section-label">Live Rankings</p>
       <h1 class="section-title" style="margin-bottom:0;">Leaderboard</h1>
-      <p class="lb-meta">Auto-refreshes every 60 seconds &nbsp;|&nbsp; Last updated: <span id="refresh-ts">—</span></p>
+      <p class="lb-meta">Auto-refreshes every 60 seconds &nbsp;|&nbsp; Last updated: <span id="refresh-ts">-</span></p>
       <div class="lb-totals">
         <div class="lb-total-chip cyan-chip">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          Total Likes: <span class="chip-val" id="total-likes">—</span>
+          Total Likes: <span class="chip-val" id="total-likes">-</span>
         </div>
         <div class="lb-total-chip lime-chip">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          Total Invested: <span class="chip-val" id="total-money">—</span>
+          Total Invested: <span class="chip-val" id="total-money">-</span>
         </div>
       </div>
     </div>
@@ -166,8 +186,14 @@
         const pct  = maxVal > 0 ? Math.max(2, Math.round((val / maxVal) * 100)) : 2;
         const rCls = rank === 1 ? 'r1' : rank === 2 ? 'r2' : rank === 3 ? 'r3' : 'rn';
         const rankIcon = rank === 1 ? '&#9733;' : rank === 2 ? '2' : rank === 3 ? '3' : rank;
+        const thumb = d.id
+          ? `<img class="lb-thumb" src="assets/design${d.id}/photo.jpg" loading="lazy"
+               onerror="this.src='assets/design${d.id}/photo.jpeg';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';}"
+               alt="${escHtml(d.name)}"><div class="lb-thumb-blank" style="display:none"></div>`
+          : `<div class="lb-thumb-blank"></div>`;
         return `<div class="lb-entry">
           <div class="lb-rank ${rCls}">${rankIcon}</div>
+          ${thumb}
           <div style="min-width:0;flex:1;">
             <div class="lb-name">${escHtml(d.name)}</div>
             <div class="lb-bar-wrap">
@@ -185,7 +211,7 @@
         document.getElementById('setup-banner-area').innerHTML = `
           <div class="lb-setup-banner">
             <span>&#9888;</span>
-            <div>Google Sheets is not connected — showing local data only.
+            <div>Google Sheets is not connected - showing local data only.
             Follow <a href="../SETUP.md" target="_blank">SETUP.md</a> to enable live syncing.</div>
           </div>`;
       }
