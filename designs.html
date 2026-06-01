@@ -27,8 +27,24 @@
 
     /* Override dnav-row for simplified 3-column layout */
     .dnav-row {
-      grid-template-columns: 3.5rem 1fr auto;
-      min-height: 56px;
+      grid-template-columns: 3.5rem 72px 1fr auto;
+      min-height: 72px;
+      align-items: center;
+    }
+    .dnav-thumb {
+      width: 72px;
+      height: 54px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+    .dnav-thumb-placeholder {
+      width: 72px;
+      height: 54px;
+      background: var(--bg-1);
+      border-radius: 4px;
+      border: 1px solid var(--border);
     }
     /* Hover on active anchor rows */
     a.dnav-row:hover {
@@ -99,177 +115,211 @@
 
     <a class="dnav-row" href="designs/1-beachy-water-park.html">
       <span class="dnav-num">01</span>
+      <img class="dnav-thumb" src="assets/design1/photo.jpg" alt="Beachy Water Park" loading="lazy">
       <span class="dnav-name">Beachy Water Park</span>
-      <span class="dnav-arrow">→</span>
+      <span class="dnav-arrow">&#x2192;</span>
     </a>
     <a class="dnav-row" href="designs/2-star-wars.html">
       <span class="dnav-num">02</span>
+      <img class="dnav-thumb" src="assets/design2/photo.jpg" alt="Star Wars" loading="lazy">
       <span class="dnav-name">Star Wars</span>
-      <span class="dnav-arrow">→</span>
+      <span class="dnav-arrow">&#x2192;</span>
     </a>
     <a class="dnav-row" href="designs/3-laser-tag-zone.html">
       <span class="dnav-num">03</span>
+      <img class="dnav-thumb" src="assets/design3/photo.jpg" alt="Laser Tag Zone" loading="lazy">
       <span class="dnav-name">Laser Tag Zone</span>
-      <span class="dnav-arrow">→</span>
+      <span class="dnav-arrow">&#x2192;</span>
     </a>
     <a class="dnav-row" href="designs/4-star-wars-playground.html">
       <span class="dnav-num">04</span>
+      <img class="dnav-thumb" src="assets/design4/photo.jpg" alt="Star Wars Playground" loading="lazy">
       <span class="dnav-name">Star Wars Playground</span>
-      <span class="dnav-arrow">→</span>
+      <span class="dnav-arrow">&#x2192;</span>
     </a>
     <a class="dnav-row" href="designs/5-the-cosy-cafe.html">
       <span class="dnav-num">05</span>
+      <img class="dnav-thumb" src="assets/design5/photo.jpeg" alt="The Cosy Cafe" loading="lazy">
       <span class="dnav-name">The Cosy Cafe</span>
-      <span class="dnav-arrow">→</span>
+      <span class="dnav-arrow">&#x2192;</span>
     </a>
     <a class="dnav-row" href="designs/6-out-of-the-universe-land.html">
       <span class="dnav-num">06</span>
+      <img class="dnav-thumb" src="assets/design6/photo.jpg" alt="Out of the Universe Land" loading="lazy">
       <span class="dnav-name">Out of the Universe Land</span>
-      <span class="dnav-arrow">→</span>
+      <span class="dnav-arrow">&#x2192;</span>
     </a>
     <a class="dnav-row" href="designs/7-capybara-skatepark.html">
       <span class="dnav-num">07</span>
+      <img class="dnav-thumb" src="assets/design7/photo.jpeg" alt="Capybara Skatepark" loading="lazy">
       <span class="dnav-name">Capybara Skatepark</span>
-      <span class="dnav-arrow">→</span>
+      <span class="dnav-arrow">&#x2192;</span>
     </a>
     <a class="dnav-row" href="designs/8-the-secret-snake-park.html">
       <span class="dnav-num">08</span>
+      <img class="dnav-thumb" src="assets/design8/photo.jpeg" alt="The Secret Snake Park" loading="lazy">
       <span class="dnav-name">The Secret Snake Park</span>
-      <span class="dnav-arrow">→</span>
+      <span class="dnav-arrow">&#x2192;</span>
     </a>
     <a class="dnav-row" href="designs/9-millys-house.html">
       <span class="dnav-num">09</span>
+      <img class="dnav-thumb" src="assets/design9/photo.jpeg" alt="Milly's House" loading="lazy">
       <span class="dnav-name">Milly's House</span>
-      <span class="dnav-arrow">→</span>
+      <span class="dnav-arrow">&#x2192;</span>
     </a>
     <a class="dnav-row" href="designs/10-ronaldo-soccer.html">
       <span class="dnav-num">10</span>
+      <img class="dnav-thumb" src="assets/design10/photo.jpeg" alt="Ronaldo Soccer!" loading="lazy">
       <span class="dnav-name">Ronaldo Soccer!</span>
-      <span class="dnav-arrow">→</span>
+      <span class="dnav-arrow">&#x2192;</span>
     </a>
     <a class="dnav-row" href="designs/11-pet-playland.html">
       <span class="dnav-num">11</span>
+      <img class="dnav-thumb" src="assets/design11/photo.jpg" alt="Pet Playland" loading="lazy">
       <span class="dnav-name">Pet Playland</span>
-      <span class="dnav-arrow">→</span>
+      <span class="dnav-arrow">&#x2192;</span>
     </a>
     <a class="dnav-row" href="designs/12-space-ground.html">
       <span class="dnav-num">12</span>
+      <img class="dnav-thumb" src="assets/design12/photo.jpeg" alt="Space Ground" loading="lazy">
       <span class="dnav-name">Space Ground</span>
-      <span class="dnav-arrow">→</span>
+      <span class="dnav-arrow">&#x2192;</span>
     </a>
     <a class="dnav-row" href="designs/13-a-dogs-dream-home.html">
       <span class="dnav-num">13</span>
+      <img class="dnav-thumb" src="assets/design13/photo.jpeg" alt="A Dog's Dream Home" loading="lazy">
       <span class="dnav-name">A Dog's Dream Home</span>
-      <span class="dnav-arrow">→</span>
+      <span class="dnav-arrow">&#x2192;</span>
     </a>
     <a class="dnav-row" href="designs/14-jungle-treehouse.html">
       <span class="dnav-num">14</span>
+      <img class="dnav-thumb" src="assets/design14/photo.jpg" alt="Jungle Treehouse" loading="lazy">
       <span class="dnav-name">Jungle Treehouse</span>
-      <span class="dnav-arrow">→</span>
+      <span class="dnav-arrow">&#x2192;</span>
     </a>
     <a class="dnav-row" href="designs/15-soccer-mad.html">
       <span class="dnav-num">15</span>
+      <img class="dnav-thumb" src="assets/design15/photo.jpeg" alt="Soccer Mad" loading="lazy">
       <span class="dnav-name">Soccer Mad</span>
-      <span class="dnav-arrow">→</span>
+      <span class="dnav-arrow">&#x2192;</span>
     </a>
     <a class="dnav-row" href="designs/16-space-race-world.html">
       <span class="dnav-num">16</span>
+      <img class="dnav-thumb" src="assets/design16/photo.jpg" alt="Space Race World" loading="lazy">
       <span class="dnav-name">Space Race World</span>
-      <span class="dnav-arrow">→</span>
+      <span class="dnav-arrow">&#x2192;</span>
     </a>
-        <a class="dnav-row" href="designs/17-pink-explosion.html">
+    <a class="dnav-row" href="designs/17-pink-explosion.html">
       <span class="dnav-num">17</span>
+      <img class="dnav-thumb" src="assets/design17/photo.jpg" alt="Pink Explosion" loading="lazy">
       <span class="dnav-name">Pink Explosion</span>
       <span class="dnav-arrow">&#x2192;</span>
     </a>
-        <a class="dnav-row" href="designs/18-the-rich-riders.html">
+    <a class="dnav-row" href="designs/18-the-rich-riders.html">
       <span class="dnav-num">18</span>
+      <img class="dnav-thumb" src="assets/design18/photo.jpg" alt="The Rich Riders" loading="lazy">
       <span class="dnav-name">The Rich Riders</span>
       <span class="dnav-arrow">&#x2192;</span>
     </a>
-        <a class="dnav-row" href="designs/19-blue-paradise.html">
+    <a class="dnav-row" href="designs/19-blue-paradise.html">
       <span class="dnav-num">19</span>
+      <img class="dnav-thumb" src="assets/design19/photo.jpg" alt="Blue Paradise" loading="lazy">
       <span class="dnav-name">Blue Paradise</span>
       <span class="dnav-arrow">&#x2192;</span>
     </a>
-        <a class="dnav-row" href="designs/20-jungle-playground.html">
+    <a class="dnav-row" href="designs/20-jungle-playground.html">
       <span class="dnav-num">20</span>
+      <img class="dnav-thumb" src="assets/design20/photo.jpg" alt="Jungle Playground" loading="lazy">
       <span class="dnav-name">Jungle Playground</span>
       <span class="dnav-arrow">&#x2192;</span>
     </a>
-        <a class="dnav-row" href="designs/21-the-jungle.html">
+    <a class="dnav-row" href="designs/21-the-jungle.html">
       <span class="dnav-num">21</span>
+      <img class="dnav-thumb" src="assets/design21/photo.jpg" alt="The Jungle" loading="lazy">
       <span class="dnav-name">The Jungle</span>
       <span class="dnav-arrow">&#x2192;</span>
     </a>
     <a class="dnav-row" href="designs/22-pets-pets-pets.html">
       <span class="dnav-num">22</span>
+      <img class="dnav-thumb" src="assets/design22/photo.jpeg" alt="Pets Pets Pets" loading="lazy">
       <span class="dnav-name">Pets Pets Pets</span>
-      <span class="dnav-arrow">→</span>
+      <span class="dnav-arrow">&#x2192;</span>
     </a>
-        <a class="dnav-row" href="designs/23-space-play.html">
+    <a class="dnav-row" href="designs/23-space-play.html">
       <span class="dnav-num">23</span>
+      <img class="dnav-thumb" src="assets/design23/photo.jpg" alt="Space Play" loading="lazy">
       <span class="dnav-name">Space Play</span>
       <span class="dnav-arrow">&#x2192;</span>
     </a>
-        <a class="dnav-row" href="designs/24-pool-land.html">
+    <a class="dnav-row" href="designs/24-pool-land.html">
       <span class="dnav-num">24</span>
+      <img class="dnav-thumb" src="assets/design24/photo.jpg" alt="Pool Land" loading="lazy">
       <span class="dnav-name">Pool Land</span>
       <span class="dnav-arrow">&#x2192;</span>
     </a>
-        <a class="dnav-row" href="designs/25-music-playground.html">
+    <a class="dnav-row" href="designs/25-music-playground.html">
       <span class="dnav-num">25</span>
+      <img class="dnav-thumb" src="assets/design25/photo.jpg" alt="Music Playground" loading="lazy">
       <span class="dnav-name">Music Playground</span>
       <span class="dnav-arrow">&#x2192;</span>
     </a>
-        <a class="dnav-row" href="designs/26-its-raining-food.html">
+    <a class="dnav-row" href="designs/26-its-raining-food.html">
       <span class="dnav-num">26</span>
+      <img class="dnav-thumb" src="assets/design26/photo.jpg" alt="It's Raining Food!" loading="lazy">
       <span class="dnav-name">It's Raining Food!</span>
       <span class="dnav-arrow">&#x2192;</span>
     </a>
-        <div class="dnav-row dnav-locked">
-      <span class="dnav-num">27</span>
-      <span class="dnav-name">Design 27</span>
-      <span class="dnav-badge">COMING SOON</span>
-    </div>
-
-            <a class="dnav-row" href="designs/28-a-new-play-space.html">
+    <a class="dnav-row" href="designs/28-a-new-play-space.html">
       <span class="dnav-num">28</span>
+      <img class="dnav-thumb" src="assets/design28/photo.jpg" alt="A New Play SPACE" loading="lazy">
       <span class="dnav-name">A New Play SPACE</span>
       <span class="dnav-arrow">&#x2192;</span>
     </a>
-            <a class="dnav-row" href="designs/29-turtle-beach.html">
+    <a class="dnav-row" href="designs/29-turtle-beach.html">
       <span class="dnav-num">29</span>
+      <img class="dnav-thumb" src="assets/design29/photo.jpg" alt="Turtle Beach" loading="lazy">
       <span class="dnav-name">Turtle Beach</span>
       <span class="dnav-arrow">&#x2192;</span>
     </a>
     <div class="dnav-row dnav-locked">
+      <span class="dnav-num">27</span>
+      <div class="dnav-thumb-placeholder"></div>
+      <span class="dnav-name">Design 27</span>
+      <span class="dnav-badge">COMING SOON</span>
+    </div>
+    <div class="dnav-row dnav-locked">
       <span class="dnav-num">30</span>
+      <div class="dnav-thumb-placeholder"></div>
       <span class="dnav-name">Playground Design 30</span>
       <span class="dnav-badge">COMING SOON</span>
     </div>
     <div class="dnav-row dnav-locked">
       <span class="dnav-num">31</span>
+      <div class="dnav-thumb-placeholder"></div>
       <span class="dnav-name">Playground Design 31</span>
       <span class="dnav-badge">COMING SOON</span>
     </div>
     <div class="dnav-row dnav-locked">
       <span class="dnav-num">32</span>
+      <div class="dnav-thumb-placeholder"></div>
       <span class="dnav-name">Playground Design 32</span>
       <span class="dnav-badge">COMING SOON</span>
     </div>
     <div class="dnav-row dnav-locked">
       <span class="dnav-num">33</span>
+      <div class="dnav-thumb-placeholder"></div>
       <span class="dnav-name">Playground Design 33</span>
       <span class="dnav-badge">COMING SOON</span>
     </div>
     <div class="dnav-row dnav-locked">
       <span class="dnav-num">34</span>
+      <div class="dnav-thumb-placeholder"></div>
       <span class="dnav-name">Playground Design 34</span>
       <span class="dnav-badge">COMING SOON</span>
     </div>
     <div class="dnav-row dnav-locked">
       <span class="dnav-num">35</span>
+      <div class="dnav-thumb-placeholder"></div>
       <span class="dnav-name">Playground Design 35</span>
       <span class="dnav-badge">COMING SOON</span>
     </div>
