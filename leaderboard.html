@@ -186,18 +186,20 @@
         const pct  = maxVal > 0 ? Math.max(2, Math.round((val / maxVal) * 100)) : 2;
         const rCls = rank === 1 ? 'r1' : rank === 2 ? 'r2' : rank === 3 ? 'r3' : 'rn';
         const rankIcon = rank === 1 ? '&#9733;' : rank === 2 ? '2' : rank === 3 ? '3' : rank;
-        const thumb = d.id
+        const thumbImg = d.id
           ? `<img class="lb-thumb" src="assets/design${d.id}/photo.jpg" loading="lazy"
                onerror="this.src='assets/design${d.id}/photo.jpeg';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='block';}"
                alt="${escHtml(d.name)}"><div class="lb-thumb-blank" style="display:none"></div>`
           : `<div class="lb-thumb-blank"></div>`;
         return `<div class="lb-entry">
           <div class="lb-rank ${rCls}">${rankIcon}</div>
-          ${thumb}
           <div style="min-width:0;flex:1;">
-            <div class="lb-name">${escHtml(d.name)}</div>
-            <div class="lb-bar-wrap">
-              <div class="lb-bar" style="width:${pct}%; background:${barColor};"></div>
+            <div class="lb-name" style="margin-bottom:0.45rem;">${escHtml(d.name)}</div>
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              ${thumbImg}
+              <div class="lb-bar-wrap" style="flex:1;">
+                <div class="lb-bar" style="width:${pct}%; background:${barColor};"></div>
+              </div>
             </div>
           </div>
           <div class="lb-count">${fmt(val)}</div>
