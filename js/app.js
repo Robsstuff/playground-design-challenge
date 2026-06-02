@@ -13,7 +13,7 @@ const DESIGNS = [
   { id:  8, name: 'The Secret Snake Park',               slug: '8-the-secret-snake-park',       active: true  },
   { id:  9, name: 'Milly\'s House',                      slug: '9-millys-house',                active: true  },
   { id: 10, name: 'Ronaldo Soccer!',                     slug: '10-ronaldo-soccer',             active: true  },
-  { id: 11, name: 'Pet Playland',                        slug: '11-pet-playland',               active: true  },
+    { id: 11, name: 'Pet Playland',                      slug: '11-pet-playland',            active: false },
   { id: 12, name: 'Space Ground',                        slug: '12-space-ground',               active: true  },
   { id: 13, name: 'A Dog\'s Dream Home',                 slug: '13-a-dogs-dream-home',          active: true  },
   { id: 14, name: 'Jungle Treehouse',                    slug: '14-jungle-treehouse',           active: true  },
