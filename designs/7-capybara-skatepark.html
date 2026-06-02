@@ -162,6 +162,20 @@
     </div>
   </section>
 
+  
+  <!-- ── Spotlight mini-game ──────────────────────────────────────────────── -->
+  <section class="section-wrap">
+    <div class="section-label">Spotlight Mini-Game</div>
+    <p style="font-size:0.85rem; color:var(--fg-muted); margin:0 0 0.75rem;">
+      Move your spotlight to reveal the design — and find the hidden eagle for confetti!
+    </p>
+    <canvas class="spotlight-canvas"
+            data-img="../assets/design7/photo.jpeg"
+            data-eagle="../assets/eagle.png"
+            style="display:block; width:100%; border-radius:var(--radius); border:1px solid var(--border); cursor:crosshair;">
+    </canvas>
+  </section>
+
   <footer class="site-footer">
     Playground Design Challenge &nbsp;//&nbsp; Design #07 &nbsp;//&nbsp;
     <a href="../leaderboard.html" style="color:var(--cyan);text-decoration:none;">View Leaderboard</a>
@@ -173,5 +187,6 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => { initDesignPage(7); });
   </script>
+  <script src="../js/spotlight.js"></script>
 </body>
 </html>
