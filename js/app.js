@@ -374,9 +374,22 @@ function escHtml(str) {
 function initReveal() {
   const els = document.querySelectorAll('.reveal');
   if (!els.length) return;
+
+  // Stagger design cards by column so each row fans in left→right
+  const cards = document.querySelectorAll('.design-card.reveal');
+  cards.forEach((card, i) => {
+    // 4-column grid → stagger by column position (0–3)
+    card.style.transitionDelay = (i % 4 * 75) + 'ms';
+  });
+
   const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.10 });
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.06 });
   els.forEach(el => obs.observe(el));
 }
 

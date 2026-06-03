@@ -1008,6 +1008,19 @@ body::before {
   transform: translateY(0);
 }
 
+/* Design cards: start small, grow to full size on scroll */
+.design-card.reveal {
+  opacity: 0;
+  transform: scale(0.78) translateY(28px);
+  transition: opacity 0.55s var(--transition),
+              transform 0.55s var(--transition);
+  transform-origin: center bottom;
+}
+.design-card.reveal.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
 /* ── Rate-limit button states ────────────────────────────────────────────── */
 
 /* Like button — cooling down: dark overlay shows countdown */
