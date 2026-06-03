@@ -343,12 +343,11 @@ body::before {
 /* ── Design grid ─────────────────────────────────────────────────────────── */
 .designs-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.25rem;
 }
-@media (max-width: 1100px) { .designs-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 768px)  { .designs-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 480px)  { .designs-grid { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { .designs-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .designs-grid { grid-template-columns: 1fr; } }
 
 .design-card {
   position: relative;
@@ -1008,18 +1007,6 @@ body::before {
   transform: translateY(0);
 }
 
-/* Design cards: start small, grow to full size on scroll */
-.design-card.reveal {
-  opacity: 0;
-  transform: scale(0.78) translateY(28px);
-  transition: opacity 0.55s var(--transition),
-              transform 0.55s var(--transition);
-  transform-origin: center bottom;
-}
-.design-card.reveal.visible {
-  opacity: 1;
-  transform: scale(1) translateY(0);
-}
 
 /* ── Rate-limit button states ────────────────────────────────────────────── */
 

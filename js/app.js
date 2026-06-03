@@ -375,13 +375,6 @@ function initReveal() {
   const els = document.querySelectorAll('.reveal');
   if (!els.length) return;
 
-  // Stagger design cards by column so each row fans in left→right
-  const cards = document.querySelectorAll('.design-card.reveal');
-  cards.forEach((card, i) => {
-    // 4-column grid → stagger by column position (0–3)
-    card.style.transitionDelay = (i % 4 * 75) + 'ms';
-  });
-
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
