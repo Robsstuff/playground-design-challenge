@@ -344,13 +344,15 @@ body::before {
 .designs-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
+  gap: 1rem;
 }
 @media (max-width: 768px) { .designs-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px) { .designs-grid { grid-template-columns: 1fr; } }
 
+/* Every card is a perfect 1:1 square — guaranteed identical size */
 .design-card {
   position: relative;
+  aspect-ratio: 1 / 1;
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--border);
@@ -359,90 +361,92 @@ body::before {
   cursor: pointer;
   text-decoration: none;
   color: inherit;
-  display: flex;
-  flex-direction: column;
+  display: block;
 }
 .design-card:hover:not(.locked) {
   border-color: var(--border-strong);
   box-shadow: var(--glow-cyan);
-  transform: translateY(-6px);
+  transform: translateY(-5px);
 }
 .design-card.locked {
   cursor: default;
-  opacity: 0.55;
-  filter: grayscale(0.4);
+  opacity: 0.45;
+  filter: grayscale(0.5);
+  pointer-events: none;
 }
-.design-card.locked:hover { border-color: rgba(0,229,255,0.28); }
 
+/* Photo fills the entire square */
 .design-card-thumb {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  aspect-ratio: 4/3;
+  height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.5s ease;
+}
+.design-card:hover:not(.locked) .design-card-thumb {
+  transform: scale(1.06);
 }
 
+/* Placeholder for locked/no-photo cards */
 .design-card-thumb-placeholder {
-  width: 100%;
-  aspect-ratio: 4/3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: absolute;
+  inset: 0;
   background: repeating-linear-gradient(
     45deg,
-    var(--bg-1) 0px, var(--bg-1) 10px,
-    var(--bg-2) 10px, var(--bg-2) 20px
+    var(--bg-1) 0px, var(--bg-1) 12px,
+    var(--bg-card) 12px, var(--bg-card) 24px
   );
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--fg-muted);
 }
 
-.design-card-body {
-  padding: 0.85rem 1rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+/* Gradient overlay — text lives here */
+.design-card-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.92) 0%,
+    rgba(0,0,0,0.65) 45%,
+    transparent 100%
+  );
+  padding: 2.5rem 0.9rem 0.85rem;
 }
 
 .design-card-num {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.62rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--cyan);
+  margin-bottom: 0.2rem;
 }
-.locked .design-card-num { color: var(--fg-muted); }
+.locked .design-card-num { color: rgba(255,255,255,0.45); }
 
 .design-card-name {
-  font-size: 0.88rem;
-  font-weight: 600;
-  line-height: 1.3;
-  color: var(--fg);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #fff;
+  margin-bottom: 0.55rem;
 }
 
 .design-card-stats {
   display: flex;
-  gap: 1rem;
-  margin-top: auto;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--border);
+  gap: 0.9rem;
 }
 
 .design-card-stat {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  color: var(--fg-muted);
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.72);
   display: flex;
   align-items: center;
   gap: 0.3rem;
 }
 .design-card-stat .val {
-  color: var(--fg);
+  color: #fff;
   font-weight: 700;
 }
 
