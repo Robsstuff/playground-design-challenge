@@ -93,7 +93,7 @@ body::before {
 
 .nav-logo {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 0.98rem;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -180,7 +180,7 @@ body::before {
 
 .hero-eyebrow {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
+  font-size: 0.94rem;
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -219,7 +219,7 @@ body::before {
   align-items: center;
   gap: 0.6rem;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 0.98rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -251,7 +251,7 @@ body::before {
   gap: 0.4rem;
   color: var(--fg-muted);
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.62rem;
+  font-size: 0.85rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   animation: scrollPulse 2.2s ease-in-out infinite;
@@ -272,7 +272,7 @@ body::before {
 
 .section-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
+  font-size: 0.88rem;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;

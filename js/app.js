@@ -18,7 +18,7 @@ const DESIGNS = [
   { id: 13, name: 'A Dog\'s Dream Home',                 slug: '13-a-dogs-dream-home',          active: true  },
   { id: 14, name: 'Jungle Treehouse',                    slug: '14-jungle-treehouse',           active: true  },
   { id: 15, name: 'Soccer Mad',                          slug: '15-soccer-mad',                 active: true  },
-  { id: 16, name: 'Space Race World',                    slug: '16-space-race-world',           active: true  },
+    { id: 16, name: 'Space Race World',                  slug: '16-space-race-world',        active: false },
     { id: 17, name: 'Pink Explosion',                      slug: '17-pink-explosion',             active: true  },
     { id: 18, name: 'The Rich Riders',                     slug: '18-the-rich-riders',            active: true  },
     { id: 19, name: 'Blue Paradise',                       slug: '19-blue-paradise',              active: true  },
