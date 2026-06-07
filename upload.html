@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>Upload Photo — Playground Design</title>
+  <title>Upload Photo - Playground Design</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -360,8 +360,8 @@
       <div>
         <div class="field-label">Design Number</div>
         <select id="design-select">
-          <option value="">— Select a design —</option>
-          <option value="1">Design #01 — Beach and Sand Grass Gap</option>
+          <option value="">- Select a design -</option>
+          <option value="1">Design #01 - Beach and Sand Grass Gap</option>
           <option value="2">Design #02</option>
           <option value="3">Design #03</option>
           <option value="4">Design #04</option>
@@ -485,7 +485,7 @@
       document.getElementById('token-stored-notice').style.display = 'none';
     }
 
-    // ── Validation — enable upload button when ready ──────────────────────────
+    // ── Validation - enable upload button when ready ──────────────────────────
     function checkReady() {
       const design = document.getElementById('design-select').value;
       const token  = document.getElementById('token-input').value.trim();
@@ -516,7 +516,7 @@
         document.getElementById('drop-zone').style.display = 'none';
         const sizeKB = Math.round(file.size / 1024);
         document.getElementById('preview-badge').textContent =
-          file.name + ' — ' + (sizeKB > 999 ? (sizeKB/1024).toFixed(1)+'MB' : sizeKB+'KB');
+          file.name + ' - ' + (sizeKB > 999 ? (sizeKB/1024).toFixed(1)+'MB' : sizeKB+'KB');
       };
       reader.readAsDataURL(file);
       checkReady();
